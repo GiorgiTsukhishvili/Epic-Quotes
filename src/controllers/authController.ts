@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 
-export const login = (req: Request, res: Response) => {};
+export const login = (req: Request, res: Response) => {
+  res.send("Hoho");
+};
 
 export const logoOut = (req: Request, res: Response) => {};
 

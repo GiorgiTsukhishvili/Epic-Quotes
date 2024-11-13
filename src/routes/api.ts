@@ -38,11 +38,13 @@ import {
   updateNotification,
 } from "../controllers/notificationController";
 import { storeOrDestroyLike } from "../controllers/likeController";
+import { loginRequest } from "../requests/authRequests";
+import { validateRequest } from "../middleware/validatorMiddleware";
 
 const apiRouter = Router();
 
 apiRouter
-  .post("/login", login)
+  .post("/login", loginRequest, validateRequest, login)
   .post("/log-out", logoOut)
   .get("/user-info", userInfo)
   .get("/verify", emailVerify);
