@@ -1,53 +1,87 @@
-import { Router, Request, Response } from "express";
+import { Router } from "express";
+
+import {
+  createMovie,
+  deleteMovie,
+  genres,
+  getMovie,
+  getMovies,
+  names,
+  updateMovie,
+} from "../controllers/movieController";
+import {
+  createQuote,
+  deleteQuote,
+  getQuote,
+  getQuotes,
+  updateQuote,
+} from "../controllers/quoteController";
+import {
+  emailVerify,
+  login,
+  logoOut,
+  passwordReset,
+  passwordVerify,
+  userInfo,
+  register,
+} from "../controllers/authController";
+import { getProfile, updateProfile } from "../controllers/profileController";
+import {
+  addEmail,
+  deleteEmail,
+  makeEmailPrimary,
+  verifyAdditionalEmail,
+} from "../controllers/emailController";
+import { createComment } from "../controllers/commentController";
+import {
+  createNotification,
+  updateNotification,
+} from "../controllers/notificationController";
+import { storeOrDestroyLike } from "../controllers/likeController";
 
 const apiRouter = Router();
 
-apiRouter.get("/test", (req: Request, res: Response) => {
-  res.send("GOod");
-});
+apiRouter
+  .post("/login", login)
+  .post("/log-out", logoOut)
+  .get("/user-info", userInfo)
+  .get("/verify", emailVerify);
 
 apiRouter
-  .post("/login", (req: Request, res: Response) => {})
-  .post("/log-out", (req: Request, res: Response) => {})
-  .get("/user-info", (req: Request, res: Response) => {})
-  .get("/verify", (req: Request, res: Response) => {});
+  .post("/register", register)
+  .post("/password-reset", passwordReset)
+  .post("/password-verify", passwordVerify);
 
 apiRouter
-  .post("/register", (req: Request, res: Response) => {})
-  .post("/password-reset", (req: Request, res: Response) => {})
-  .post("/password-verify'", (req: Request, res: Response) => {})
-  .get("/verify", (req: Request, res: Response) => {});
+  .get("/movies", getMovies)
+  .get("/movies/:id", getMovie)
+  .get("/movie-genres", genres)
+  .get("/movie-names", names)
+  .post("/movies", createMovie)
+  .put("/movies", updateMovie)
+  .delete("/movies", deleteMovie);
 
 apiRouter
-  .get("/movies", (req: Request, res: Response) => {})
-  .get("/movies/:id", (req: Request, res: Response) => {})
-  .get("/movie-genres", (req: Request, res: Response) => {})
-  .get("/movie-names", (req: Request, res: Response) => {})
-  .post("/movies", (req: Request, res: Response) => {})
-  .put("/movies", (req: Request, res: Response) => {})
-  .delete("/movies", (req: Request, res: Response) => {});
+  .get("/quotes", getQuotes)
+  .get("/quotes/:id", getQuote)
+  .post("/quotes", createQuote)
+  .put("/quotes", updateQuote)
+  .delete("/quotes", deleteQuote);
+
+apiRouter.post("/comments", createComment);
 
 apiRouter
-  .get("/quotes", (req: Request, res: Response) => {})
-  .get("/quotes/:id", (req: Request, res: Response) => {})
-  .post("/quotes", (req: Request, res: Response) => {})
-  .put("/quotes", (req: Request, res: Response) => {})
-  .delete("/quotes", (req: Request, res: Response) => {});
+  .post("/notifications", createNotification)
+  .put("/notifications", updateNotification);
 
-apiRouter.post("/comments", (req: Request, res: Response) => {});
+apiRouter.post("/store-or-destroy-like/:id", storeOrDestroyLike);
 
-apiRouter
-  .post("/notifications", (req: Request, res: Response) => {})
-  .put("/notifications", (req: Request, res: Response) => {});
+apiRouter.get("/profile", getProfile).put("/profile", updateProfile);
 
 apiRouter
-  .get("/profile", (req: Request, res: Response) => {})
-  .put("/profile", (req: Request, res: Response) => {});
-
-apiRouter
-  .post("/email", (req: Request, res: Response) => {})
-  .post("/make-email-primary/:id", (req: Request, res: Response) => {})
-  .post("/verify-email", (req: Request, res: Response) => {})
-  .delete("/email/:id", (req: Request, res: Response) => {});
+  .post("/email", addEmail)
+  .post("/make-email-primary/:id", makeEmailPrimary)
+  .post("/verify-email", verifyAdditionalEmail)
+  .delete("/email/:id", deleteEmail);
 
 export default apiRouter;
