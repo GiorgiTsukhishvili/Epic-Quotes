@@ -38,8 +38,26 @@ import {
   updateNotification,
 } from "../controllers/notificationController";
 import { storeOrDestroyLike } from "../controllers/likeController";
-import { loginRequest } from "../requests/authRequests";
+import {
+  loginRequest,
+  newPasswordRequest,
+  passwordResetRequest,
+  registerRequest,
+} from "../requests/authRequests";
 import { validateRequest } from "../middleware/validatorMiddleware";
+import { storeOrDestroyLikeRequest } from "../requests/likeRequests";
+import { commentStoreRequest } from "../requests/commentRequests";
+import { emailVerificationRequest } from "../requests/emailRequests";
+import {
+  movieStoreRequest,
+  movieUpdateRequest,
+} from "../requests/movieReuests";
+import { notificationUpdateRequest } from "../requests/notificationRequests";
+import { profileUpdateRequest } from "../requests/profileRequests";
+import {
+  quoteStoreRequest,
+  quoteUpdateRequest,
+} from "../requests/quoteRequests";
 
 const apiRouter = Router();
 
@@ -47,43 +65,70 @@ apiRouter
   .post("/login", loginRequest, validateRequest, login)
   .post("/log-out", logoOut)
   .get("/user-info", userInfo)
-  .get("/verify", emailVerify);
+  .get("/verify", emailVerificationRequest, validateRequest, emailVerify);
 
 apiRouter
-  .post("/register", register)
-  .post("/password-reset", passwordReset)
-  .post("/password-verify", passwordVerify);
+  .post("/register", registerRequest, validateRequest, register)
+  .post("/password-reset", passwordResetRequest, validateRequest, passwordReset)
+  .post(
+    "/password-verify",
+    newPasswordRequest,
+    validateRequest,
+    passwordVerify
+  );
 
 apiRouter
   .get("/movies", getMovies)
   .get("/movies/:id", getMovie)
   .get("/movie-genres", genres)
   .get("/movie-names", names)
-  .post("/movies", createMovie)
-  .put("/movies", updateMovie)
+  .post("/movies", movieStoreRequest, validateRequest, createMovie)
+  .put("/movies", movieUpdateRequest, validateRequest, updateMovie)
   .delete("/movies", deleteMovie);
 
 apiRouter
   .get("/quotes", getQuotes)
   .get("/quotes/:id", getQuote)
-  .post("/quotes", createQuote)
-  .put("/quotes", updateQuote)
+  .post("/quotes", quoteStoreRequest, validateRequest, createQuote)
+  .put("/quotes", quoteUpdateRequest, validateRequest, updateQuote)
   .delete("/quotes", deleteQuote);
 
-apiRouter.post("/comments", createComment);
+apiRouter.post(
+  "/comments",
+  commentStoreRequest,
+  validateRequest,
+  createComment
+);
 
 apiRouter
   .post("/notifications", createNotification)
-  .put("/notifications", updateNotification);
+  .put(
+    "/notifications",
+    notificationUpdateRequest,
+    validateRequest,
+    updateNotification
+  );
 
-apiRouter.post("/store-or-destroy-like/:id", storeOrDestroyLike);
+apiRouter.post(
+  "/store-or-destroy-like/:id",
+  storeOrDestroyLikeRequest,
+  validateRequest,
+  storeOrDestroyLike
+);
 
-apiRouter.get("/profile", getProfile).put("/profile", updateProfile);
+apiRouter
+  .get("/profile", getProfile)
+  .put("/profile", profileUpdateRequest, validateRequest, updateProfile);
 
 apiRouter
   .post("/email", addEmail)
   .post("/make-email-primary/:id", makeEmailPrimary)
-  .post("/verify-email", verifyAdditionalEmail)
+  .post(
+    "/verify-email",
+    emailVerificationRequest,
+    validateRequest,
+    verifyAdditionalEmail
+  )
   .delete("/email/:id", deleteEmail);
 
 export default apiRouter;
