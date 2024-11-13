@@ -1,8 +1,12 @@
 import express from "express";
 import apiRouter from "./routes/api";
+import cors from "cors";
+import { corsOptions } from "./utils/cors";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
