@@ -14,16 +14,18 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  name      String
-  image     String
-  google_id String?
-  password  String?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  Email     Email[]
-  Movie     Movie[]
-  Comment   Comment[]
+  id                  Int            @id @default(autoincrement())
+  name                String
+  image               String
+  google_id           String?
+  password            String?
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  Email               Email[]
+  Movie               Movie[]
+  Comment             Comment[]
+  notifications       Notification[] @relation("UserNotifications")
+  personNotifications Notification[] @relation("PersonNotifications")
 }
 
 model Email {
@@ -92,4 +94,14 @@ model MovieTag {
   tagId   Int
 
   @@id([movieId, tagId])
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation("UserNotifications", fields: [userId], references: [id])
+  person    User     @relation("PersonNotifications", fields: [personId], references: [id])
+  userId    Int
+  personId  Int
 }
