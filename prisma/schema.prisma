@@ -14,15 +14,16 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   image     String
   google_id String?
   password  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
   Email     Email[]
   Movie     Movie[]
+  Comment   Comment[]
 }
 
 model Email {
@@ -53,11 +54,22 @@ model Movie {
 }
 
 model Quote {
-  id        Int      @id @default(autoincrement())
-  quote     String   @db.Text
+  id        Int       @id @default(autoincrement())
+  quote     String    @db.Text
   image     String
-  movie     Movie    @relation(fields: [movieId], references: [id])
+  movie     Movie     @relation(fields: [movieId], references: [id])
   movieId   Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Comment   Comment[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  quote     Quote    @relation(fields: [quoteId], references: [id])
+  quoteId   Int
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
