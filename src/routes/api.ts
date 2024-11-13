@@ -2,6 +2,10 @@ import { Router, Request, Response } from "express";
 
 const apiRouter = Router();
 
+apiRouter.get("/test", (req: Request, res: Response) => {
+  res.send("GOod");
+});
+
 apiRouter
   .post("/login", (req: Request, res: Response) => {})
   .post("/log-out", (req: Request, res: Response) => {})
