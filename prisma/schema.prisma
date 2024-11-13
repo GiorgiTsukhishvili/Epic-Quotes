@@ -22,6 +22,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Email     Email[]
+  Movie     Movie[]
 }
 
 model Email {
@@ -34,4 +35,18 @@ model Email {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   userId            Int
+}
+
+model Movie {
+  id          Int      @id @default(autoincrement())
+  name        String
+  director    String
+  description String   @db.Text
+  image       String
+  date        String
+  budget      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  userId      Int
 }
