@@ -74,3 +74,7 @@ export const registerRequest = [
     .custom((value, { req }) => value === req.body.password)
     .withMessage("Passwords do not match"),
 ];
+
+export const refreshTokenRequest = [
+  body("refreshToken").notEmpty().withMessage("Refresh token is required"),
+];

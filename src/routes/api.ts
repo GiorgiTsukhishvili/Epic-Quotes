@@ -18,11 +18,8 @@ import {
 } from "../controllers/quoteController";
 import {
   emailVerify,
-  login,
-  logoOut,
   passwordReset,
   passwordVerify,
-  userInfo,
   register,
 } from "../controllers/authController";
 import { getProfile, updateProfile } from "../controllers/profileController";
@@ -42,6 +39,7 @@ import {
   loginRequest,
   newPasswordRequest,
   passwordResetRequest,
+  refreshTokenRequest,
   registerRequest,
 } from "../requests/authRequests";
 import { validateRequest } from "../middleware/validatorMiddleware";
@@ -59,6 +57,12 @@ import {
   quoteUpdateRequest,
 } from "../requests/quoteRequests";
 import { authMiddleware } from "../middleware/authMiddleware";
+import {
+  login,
+  logoOut,
+  refreshToken,
+  userInfo,
+} from "../controllers/userStateController";
 
 const userRouter = Router();
 const guestRouter = Router();
@@ -67,7 +71,8 @@ userRouter.use(authMiddleware);
 
 guestRouter
   .post("/login", loginRequest, validateRequest, login)
-  .get("/verify", emailVerificationRequest, validateRequest, emailVerify);
+  .get("/verify", emailVerificationRequest, validateRequest, emailVerify)
+  .post("/refresh-token", refreshTokenRequest, validateRequest, refreshToken);
 
 guestRouter
   .post("/register", registerRequest, validateRequest, register)

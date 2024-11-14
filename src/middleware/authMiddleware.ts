@@ -1,4 +1,4 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
 export const authMiddleware = (
@@ -14,7 +14,7 @@ export const authMiddleware = (
     return;
   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
+  jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!, (err, user) => {
     if (err) {
       res.status(401).json({ message: "Access token invalid" });
       return;

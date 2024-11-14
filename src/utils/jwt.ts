@@ -15,7 +15,7 @@ export const generateJWTToken = (
     expiresIn: remember ? "256h" : jwtTokenExpirationDate,
   });
 
-  const refreshToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET!, {
+  const refreshToken = jwt.sign(userInfo, process.env.REFRESH_TOKEN_SECRET!, {
     expiresIn: jwtTokenRefreshExpirationDate,
   });
 

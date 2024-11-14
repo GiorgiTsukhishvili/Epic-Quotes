@@ -9,54 +9,6 @@ import { generateJWTToken } from "../utils/jwt";
 
 const prisma = new PrismaClient();
 
-export const login = async (req: Request, res: Response) => {
-  try {
-    const {
-      email,
-      password,
-      remember,
-    }: { email: string; password: string; remember: boolean } = req.body;
-
-    const selectedEmail = await prisma.email.findUnique({
-      where: { email: email },
-      include: { user: true },
-    });
-
-    if (!selectedEmail) {
-      res.status(404).json({ error: "User not found" });
-      return;
-    }
-
-    const isPasswordValid = bcrypt.compare(
-      password,
-      selectedEmail.user.password!
-    );
-
-    if (!isPasswordValid) {
-      res.status(401).json({ error: "Incorrect password" });
-      return;
-    }
-
-    res.status(200).json({
-      user: { name: selectedEmail.user.name, email: selectedEmail.email },
-      tokens: generateJWTToken(
-        {
-          userId: selectedEmail.user.id,
-          userName: selectedEmail.user.name,
-        },
-        remember
-      ),
-    });
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while creating the user" });
-  }
-};
-
-export const logoOut = (req: Request, res: Response) => {};
-
 export const register = async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
@@ -134,5 +86,3 @@ export const passwordReset = (req: Request, res: Response) => {};
 export const passwordVerify = (req: Request, res: Response) => {};
 
 export const emailVerify = (req: Request, res: Response) => {};
-
-export const userInfo = (req: Request, res: Response) => {};
