@@ -13,7 +13,21 @@ export const updateMovie = (req: Request, res: Response) => {};
 
 export const deleteMovie = (req: Request, res: Response) => {};
 
-export const names = async (req: Request, res: Response) => {};
+export const names = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.user as { id: number };
+
+    const genres = await prismaClient.movie.findMany({
+      where: { userId: id },
+      select: { name: true },
+    });
+
+    res.status(200).json(genres);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Could not fetch movie genres");
+  }
+};
 
 export const genres = async (_: Request, res: Response) => {
   try {
