@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import { transporter } from "../utils/nodemaile";
+import { transporter } from "../config/nodemailer";
 import { verificationEmailTemplate } from "../templates/verification-email";
 import { emailTranslations } from "../translations/email";
 import { generateJWTToken } from "../utils/jwt";

@@ -1,7 +1,7 @@
 import express from "express";
 import { guestRouter, userRouter } from "./routes/api";
 import cors from "cors";
-import { corsOptions } from "./utils/cors";
+import { corsOptions } from "./config/cors";
 import "./types/global";
 
 require("dotenv").config();
