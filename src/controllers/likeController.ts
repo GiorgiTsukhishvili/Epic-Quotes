@@ -1,3 +1,3 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express'
 
-export const storeOrDestroyLike = (req: Request, res: Response) => {};
+export const storeOrDestroyLike = (req: Request, res: Response) => {}

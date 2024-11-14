@@ -1,7 +1,7 @@
-import { emailTranslations } from "../translations/email";
+import { emailTranslations } from '../translations/email'
 
 export const verificationEmailTemplate = (
-  lang: "ka" | "en",
+  lang: 'ka' | 'en',
   route: URL,
   name: string,
   mainText: string,
@@ -136,10 +136,10 @@ export const verificationEmailTemplate = (
 
     <a href=${route} class="link">${routeText}</a>
 
-    <h1 class="bottom-text">${emailTranslations[lang]["any-problem"]} <a href="moviequotes.ge"
+    <h1 class="bottom-text">${emailTranslations[lang]['any-problem']} <a href="moviequotes.ge"
             class="website">support@moviequotes.ge</a></h1>
 
     <h1>${emailTranslations[lang].crew}</h1>
 </body>
 
-</html>`;
+</html>`

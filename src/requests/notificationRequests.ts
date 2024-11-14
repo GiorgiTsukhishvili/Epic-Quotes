@@ -1,3 +1,3 @@
-import { body } from "express-validator";
+import { body } from 'express-validator'
 
-export const notificationUpdateRequest = [body("ids").isArray()];
+export const notificationUpdateRequest = [body('ids').isArray()]

@@ -1,25 +1,25 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken'
 
 export const generateJWTToken = (
   userInfo: {
-    userId: number;
-    userName: string;
+    userId: number
+    userName: string
   },
   remember?: boolean
 ) => {
-  const jwtTokenExpirationDate = process.env.JWT_TOKEN_EXPIRATION_DATE;
+  const jwtTokenExpirationDate = process.env.JWT_TOKEN_EXPIRATION_DATE
   const jwtTokenRefreshExpirationDate =
-    process.env.JWT_REMEMBER_TOKEN_EXPIRATION_DATE;
+    process.env.JWT_REMEMBER_TOKEN_EXPIRATION_DATE
 
   const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: remember ? "256h" : jwtTokenExpirationDate,
-  });
+    expiresIn: remember ? '256h' : jwtTokenExpirationDate,
+  })
 
   const refreshToken = jwt.sign(userInfo, process.env.REFRESH_TOKEN_SECRET!, {
     expiresIn: jwtTokenRefreshExpirationDate,
-  });
+  })
 
-  const now = new Date().getTime();
+  const now = new Date().getTime()
 
   return {
     accessToken,
@@ -30,5 +30,5 @@ export const generateJWTToken = (
     rememberTokenExpiresIn: new Date(
       now + +(jwtTokenRefreshExpirationDate ?? 1000) * 1000
     ).getTime(),
-  };
-};
+  }
+}

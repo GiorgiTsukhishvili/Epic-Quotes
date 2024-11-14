@@ -1,80 +1,80 @@
-import { body } from "express-validator";
+import { body } from 'express-validator'
 
 export const loginRequest = [
-  body("email")
+  body('email')
     .isEmail()
-    .withMessage("Email must be a valid email address")
+    .withMessage('Email must be a valid email address')
     .notEmpty()
-    .withMessage("Email is required"),
-  body("password")
+    .withMessage('Email is required'),
+  body('password')
     .isString()
     .isLength({ min: 3 })
-    .withMessage("Password must be at least 6 characters long")
+    .withMessage('Password must be at least 6 characters long')
     .notEmpty()
-    .withMessage("Password is required"),
-  body("remember")
+    .withMessage('Password is required'),
+  body('remember')
     .optional()
     .isBoolean()
-    .withMessage("Remember must be a boolean value"),
-];
+    .withMessage('Remember must be a boolean value'),
+]
 
 export const newPasswordRequest = [
-  body("password")
+  body('password')
     .notEmpty()
-    .withMessage("Password is required")
+    .withMessage('Password is required')
     .matches(/^[a-z0-9_\-]+$/)
     .withMessage(
-      "Password must contain only lowercase letters, numbers, underscores, or hyphens"
+      'Password must contain only lowercase letters, numbers, underscores, or hyphens'
     )
     .isLength({ min: 8, max: 15 })
-    .withMessage("Password must be between 8 and 15 characters long"),
+    .withMessage('Password must be between 8 and 15 characters long'),
 
-  body("password_confirmation")
+  body('password_confirmation')
     .notEmpty()
-    .withMessage("Password confirmation is required")
+    .withMessage('Password confirmation is required')
     .custom((value, { req }) => value === req.body.password)
-    .withMessage("Passwords do not match"),
-];
+    .withMessage('Passwords do not match'),
+]
 
 export const passwordResetRequest = [
-  body("email")
+  body('email')
     .notEmpty()
-    .withMessage("Email is required")
+    .withMessage('Email is required')
     .isEmail()
-    .withMessage("Must be a valid email address"),
-];
+    .withMessage('Must be a valid email address'),
+]
 
 export const registerRequest = [
-  body("name")
+  body('name')
     .notEmpty()
-    .withMessage("Name is required")
+    .withMessage('Name is required')
     .isLength({ min: 3, max: 15 })
-    .withMessage("Name must be between 3 and 15 characters long")
+    .withMessage('Name must be between 3 and 15 characters long')
     .matches(/^[a-z0-9_\-]+$/)
     .withMessage(
-      "Name must contain only lowercase letters, numbers, underscores, or hyphens"
+      'Name must contain only lowercase letters, numbers, underscores, or hyphens'
     ),
-  body("email")
+  body('email')
     .notEmpty()
-    .withMessage("Email is required")
+    .withMessage('Email is required')
     .isEmail()
-    .withMessage("Must be a valid email address"),
-  body("password")
+    .withMessage('Must be a valid email address'),
+  body('password')
     .notEmpty()
-    .withMessage("Password is required")
+    .withMessage('Password is required')
     .matches(/^[a-z0-9_\-]+$/)
     .withMessage(
-      "Password must contain only lowercase letters, numbers, underscores, or hyphens"
+      'Password must contain only lowercase letters, numbers, underscores, or hyphens'
     )
     .isLength({ min: 8, max: 15 })
-    .withMessage("Password must be between 8 and 15 characters long"),
-  body("password_confirmation")
+    .withMessage('Password must be between 8 and 15 characters long'),
+  body('password_confirmation')
     .notEmpty()
-    .withMessage("Password confirmation is required")
+    .withMessage('Password confirmation is required')
     .custom((value, { req }) => value === req.body.password)
-    .withMessage("Passwords do not match"),
-];
+    .withMessage('Passwords do not match'),
+]
 
 export const refreshTokenRequest = [
-  body("refreshToken").notEmpty().withMessage("Refresh token is required"),
-];
+  body('refreshToken').notEmpty().withMessage('Refresh token is required'),
+]

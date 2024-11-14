@@ -1,5 +1,5 @@
-import { body } from "express-validator";
+import { body } from 'express-validator'
 
 export const storeOrDestroyLikeRequest = [
-  body("userId").notEmpty().withMessage("User Id is required"),
-];
+  body('userId').notEmpty().withMessage('User Id is required'),
+]

@@ -1,17 +1,17 @@
-import { validationResult } from "express-validator";
-import { NextFunction, Request, Response } from "express";
+import { validationResult } from 'express-validator'
+import { NextFunction, Request, Response } from 'express'
 
 export const validateRequest = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const errors = validationResult(req);
+  const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() });
-    return;
+    res.status(400).json({ errors: errors.array() })
+    return
   }
 
-  next();
-};
+  next()
+}

@@ -1,9 +1,9 @@
-import { body } from "express-validator";
+import { body } from 'express-validator'
 
 export const emailVerificationRequest = [
-  body("email")
+  body('email')
     .notEmpty()
-    .withMessage("Email is required")
+    .withMessage('Email is required')
     .isEmail()
-    .withMessage("Must be a valid email address"),
-];
+    .withMessage('Must be a valid email address'),
+]

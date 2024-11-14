@@ -1,4 +1,4 @@
-import { prisma } from "../../config/prisma";
+import { prisma } from '../../config/prisma'
 
 export const emailFactory = async (
   email: string,
@@ -13,4 +13,4 @@ export const emailFactory = async (
       verificationToken,
       emailVerifiedAt: new Date(),
     },
-  });
+  })
