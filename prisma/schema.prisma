@@ -42,9 +42,9 @@ model Email {
 
 model Movie {
   id          Int        @id @default(autoincrement())
-  name        String
-  director    String
-  description String     @db.Text
+  name        Json
+  director    Json
+  description Json
   image       String
   date        String
   budget      String
@@ -59,7 +59,7 @@ model Movie {
 
 model Quote {
   id        Int       @id @default(autoincrement())
-  quote     String    @db.Text
+  quote     Json
   image     String
   movie     Movie     @relation(fields: [movieId], references: [id])
   movieId   Int
@@ -80,7 +80,7 @@ model Comment {
 
 model Tag {
   id        Int        @id @default(autoincrement())
-  tag       String
+  tag       Json
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   movie     Movie[]
