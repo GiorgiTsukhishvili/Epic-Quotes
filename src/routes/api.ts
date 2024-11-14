@@ -58,16 +58,18 @@ import {
   quoteStoreRequest,
   quoteUpdateRequest,
 } from "../requests/quoteRequests";
+import { authMiddleware } from "../middleware/authMiddleware";
 
-const apiRouter = Router();
+const userRouter = Router();
+const guestRouter = Router();
 
-apiRouter
+userRouter.use(authMiddleware);
+
+guestRouter
   .post("/login", loginRequest, validateRequest, login)
-  .post("/log-out", logoOut)
-  .get("/user-info", userInfo)
   .get("/verify", emailVerificationRequest, validateRequest, emailVerify);
 
-apiRouter
+guestRouter
   .post("/register", registerRequest, validateRequest, register)
   .post("/password-reset", passwordResetRequest, validateRequest, passwordReset)
   .post(
@@ -77,7 +79,9 @@ apiRouter
     passwordVerify
   );
 
-apiRouter
+userRouter.post("/log-out", logoOut).get("/user-info", userInfo);
+
+userRouter
   .get("/movies", getMovies)
   .get("/movies/:id", getMovie)
   .get("/movie-genres", genres)
@@ -86,21 +90,21 @@ apiRouter
   .put("/movies", movieUpdateRequest, validateRequest, updateMovie)
   .delete("/movies", deleteMovie);
 
-apiRouter
+userRouter
   .get("/quotes", getQuotes)
   .get("/quotes/:id", getQuote)
   .post("/quotes", quoteStoreRequest, validateRequest, createQuote)
   .put("/quotes", quoteUpdateRequest, validateRequest, updateQuote)
   .delete("/quotes", deleteQuote);
 
-apiRouter.post(
+userRouter.post(
   "/comments",
   commentStoreRequest,
   validateRequest,
   createComment
 );
 
-apiRouter
+userRouter
   .post("/notifications", createNotification)
   .put(
     "/notifications",
@@ -109,18 +113,18 @@ apiRouter
     updateNotification
   );
 
-apiRouter.post(
+userRouter.post(
   "/store-or-destroy-like/:id",
   storeOrDestroyLikeRequest,
   validateRequest,
   storeOrDestroyLike
 );
 
-apiRouter
+userRouter
   .get("/profile", getProfile)
   .put("/profile", profileUpdateRequest, validateRequest, updateProfile);
 
-apiRouter
+userRouter
   .post("/email", addEmail)
   .post("/make-email-primary/:id", makeEmailPrimary)
   .post(
@@ -131,4 +135,4 @@ apiRouter
   )
   .delete("/email/:id", deleteEmail);
 
-export default apiRouter;
+export { userRouter, guestRouter };

@@ -1,7 +1,9 @@
 import express from "express";
-import apiRouter from "./routes/api";
+import { guestRouter, userRouter } from "./routes/api";
 import cors from "cors";
 import { corsOptions } from "./utils/cors";
+import "./types/global";
+
 require("dotenv").config();
 
 const app = express();
@@ -13,7 +15,8 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-app.use("/api/v1", apiRouter);
+app.use("/api/v1", guestRouter);
+app.use("/api/v1", userRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
