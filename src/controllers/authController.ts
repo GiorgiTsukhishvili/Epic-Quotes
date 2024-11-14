@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import crypto from "crypto";
 import { PrismaClient } from "@prisma/client";
 import { transporter } from "../utils/nodemaile";
 import { verificationEmailTemplate } from "../templates/verification-email";
@@ -23,12 +22,8 @@ export const register = async (req: Request, res: Response) => {
       },
     });
 
-    const verificationToken = crypto
-      .createHash("sha1")
-      .update(Date.now().toString())
-      .digest("hex");
+    const verificationToken = crypto.randomUUID();
 
-    // Store email information
     await prisma.email.create({
       data: {
         email,
