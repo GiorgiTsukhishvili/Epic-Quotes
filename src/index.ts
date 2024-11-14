@@ -1,5 +1,5 @@
 import express from 'express'
-import { guestRouter, userRouter } from './routes/api'
+import { guestRouter, userRouter } from './routes/api.routes'
 import cors from 'cors'
 import { corsOptions } from './config/cors'
 import './types/global'

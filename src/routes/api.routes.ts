@@ -8,33 +8,33 @@ import {
   getMovies,
   names,
   updateMovie,
-} from '../controllers/movieController'
+} from '../controllers/movie.controller'
 import {
   createQuote,
   deleteQuote,
   getQuote,
   getQuotes,
   updateQuote,
-} from '../controllers/quoteController'
+} from '../controllers/quote.controller'
 import {
   emailVerify,
   passwordReset,
   passwordVerify,
   register,
-} from '../controllers/authController'
-import { getProfile, updateProfile } from '../controllers/profileController'
+} from '../controllers/auth.controller'
+import { getProfile, updateProfile } from '../controllers/profile.controller'
 import {
   addEmail,
   deleteEmail,
   makeEmailPrimary,
   verifyAdditionalEmail,
-} from '../controllers/emailController'
-import { createComment } from '../controllers/commentController'
+} from '../controllers/email.controller'
+import { createComment } from '../controllers/comment.controller'
 import {
   createNotification,
   updateNotification,
-} from '../controllers/notificationController'
-import { storeOrDestroyLike } from '../controllers/likeController'
+} from '../controllers/notification.controller'
+import { storeOrDestroyLike } from '../controllers/like.controller'
 import {
   loginRequest,
   newPasswordRequest,
@@ -42,7 +42,7 @@ import {
   refreshTokenRequest,
   registerRequest,
 } from '../requests/authRequests'
-import { validateRequest } from '../middleware/validatorMiddleware'
+import { validateRequest } from '../middleware/validator.middleware'
 import { storeOrDestroyLikeRequest } from '../requests/likeRequests'
 import { commentStoreRequest } from '../requests/commentRequests'
 import { emailVerificationRequest } from '../requests/emailRequests'
@@ -53,13 +53,13 @@ import {
   quoteStoreRequest,
   quoteUpdateRequest,
 } from '../requests/quoteRequests'
-import { authMiddleware } from '../middleware/authMiddleware'
+import { authMiddleware } from '../middleware/auth.middleware'
 import {
   login,
   logoOut,
   refreshToken,
   userInfo,
-} from '../controllers/userStateController'
+} from '../controllers/userState.controller'
 
 const userRouter = Router()
 const guestRouter = Router()
