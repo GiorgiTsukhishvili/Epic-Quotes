@@ -9,7 +9,7 @@ export const generateJWTToken = (
 ) => {
   const jwtTokenExpirationDate = process.env.JWT_TOKEN_EXPIRATION_DATE;
   const jwtTokenRefreshExpirationDate =
-    process.env.JWT_REMEMBER_TOKEN_EXPIRATION_DAT;
+    process.env.JWT_REMEMBER_TOKEN_EXPIRATION_DATE;
 
   const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET!, {
     expiresIn: remember ? "256h" : jwtTokenExpirationDate,

@@ -48,7 +48,7 @@ export const login = async (req: Request, res: Response) => {
     console.error(error);
     res
       .status(500)
-      .json({ error: "An error occurred while creating the user" });
+      .json({ error: "An error occurred while logging in the user" });
   }
 };
 
@@ -59,10 +59,9 @@ export const refreshToken = (req: Request, res: Response) => {
 
   jwt.verify(
     refreshToken,
-    process.env.ACCESS_TOKEN_SECRET!,
+    process.env.REFRESH_TOKEN_SECRET!,
     (err: VerifyErrors | null, user: string | JwtPayload | undefined) => {
       if (err) {
-        console.log(refreshToken);
         res.status(401).json({ message: "Refresh token invalid" });
         return;
       }
