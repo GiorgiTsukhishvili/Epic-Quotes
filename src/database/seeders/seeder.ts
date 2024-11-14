@@ -1,4 +1,4 @@
-import { userAndEmailSeeder } from './movie.seeder'
+import { userAndEmailSeeder } from './userEmail.seeder'
 import { tagSeeder } from './tag.seeder'
 
 const main = async () => {
