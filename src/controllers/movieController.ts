@@ -15,12 +15,12 @@ export const deleteMovie = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
-    await prismaClient.user.delete({ where: { id: +id } });
+    await prismaClient.movie.delete({ where: { id: +id } });
 
     res.status(204).json({ message: "Movie was deleted" });
   } catch (err) {
     console.log(err);
-    res.status(500).send("Could not fetch movie genres");
+    res.status(500).send("Could not fetch movie");
   }
 };
 

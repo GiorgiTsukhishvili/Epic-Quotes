@@ -92,15 +92,15 @@ userRouter
   .get("/movie-genres", genres)
   .get("/movie-names", names)
   .post("/movies", movieStoreRequest, validateRequest, createMovie)
-  .put("/movies", movieUpdateRequest, validateRequest, updateMovie)
-  .delete("/movies", deleteMovie);
+  .put("/movies/:id", movieUpdateRequest, validateRequest, updateMovie)
+  .delete("/movies/:id", deleteMovie);
 
 userRouter
   .get("/quotes", getQuotes)
   .get("/quotes/:id", getQuote)
   .post("/quotes", quoteStoreRequest, validateRequest, createQuote)
-  .put("/quotes", quoteUpdateRequest, validateRequest, updateQuote)
-  .delete("/quotes", deleteQuote);
+  .put("/quotes/:id", quoteUpdateRequest, validateRequest, updateQuote)
+  .delete("/quotes/:id", deleteQuote);
 
 userRouter.post(
   "/comments",
