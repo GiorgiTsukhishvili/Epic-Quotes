@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
-import { verificationEmailTemplate } from '../templates/verification-email'
+import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
 import { generateJWTToken } from '../utils/jwt'
 import { transporter } from '../config/nodemailer'

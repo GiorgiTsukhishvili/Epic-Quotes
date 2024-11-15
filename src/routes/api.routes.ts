@@ -41,18 +41,21 @@ import {
   passwordResetRequest,
   refreshTokenRequest,
   registerRequest,
-} from '../requests/authRequests'
+} from '../requests/auth.requests'
 import { validateRequest } from '../middleware/validator.middleware'
-import { storeOrDestroyLikeRequest } from '../requests/likeRequests'
-import { commentStoreRequest } from '../requests/commentRequests'
-import { emailVerificationRequest } from '../requests/emailRequests'
-import { movieStoreRequest, movieUpdateRequest } from '../requests/movieReuests'
-import { notificationUpdateRequest } from '../requests/notificationRequests'
-import { profileUpdateRequest } from '../requests/profileRequests'
+import { storeOrDestroyLikeRequest } from '../requests/like.requests'
+import { commentStoreRequest } from '../requests/comment.requests'
+import { emailVerificationRequest } from '../requests/email.requests'
+import {
+  movieStoreRequest,
+  movieUpdateRequest,
+} from '../requests/movie.requests'
+import { notificationUpdateRequest } from '../requests/notification.requests'
+import { profileUpdateRequest } from '../requests/profile.requests'
 import {
   quoteStoreRequest,
   quoteUpdateRequest,
-} from '../requests/quoteRequests'
+} from '../requests/quote.requests'
 import { authMiddleware } from '../middleware/auth.middleware'
 import {
   login,
