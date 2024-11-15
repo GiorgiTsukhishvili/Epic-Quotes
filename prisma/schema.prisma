@@ -21,11 +21,12 @@ model User {
   password            String?
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
-  Email               Email[]
-  Movie               Movie[]
+  email               Email[]
+  movie               Movie[]
   Comment             Comment[]
   notifications       Notification[] @relation("UserNotifications")
   personNotifications Notification[] @relation("PersonNotifications")
+  like                Like[]
 }
 
 model Email {
@@ -52,9 +53,9 @@ model Movie {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   userId      Int
-  Quote       Quote[]
-  Tag         Tag[]
-  MovieTag    MovieTag[]
+  quote       Quote[]
+  tag         Tag[]
+  movieTag    MovieTag[]
 }
 
 model Quote {
@@ -65,7 +66,8 @@ model Quote {
   movieId   Int
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Comment   Comment[]
+  comment   Comment[]
+  like      Like[]
 }
 
 model Comment {
@@ -84,7 +86,7 @@ model Tag {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   movie     Movie[]
-  MovieTag  MovieTag[]
+  movieTag  MovieTag[]
 }
 
 model MovieTag {
@@ -104,4 +106,14 @@ model Notification {
   person    User     @relation("PersonNotifications", fields: [personId], references: [id])
   userId    Int
   personId  Int
+}
+
+model Like {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  quote     Quote    @relation(fields: [quoteId], references: [id])
+  quoteId   Int
 }
