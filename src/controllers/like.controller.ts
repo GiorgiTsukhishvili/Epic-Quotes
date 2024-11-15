@@ -7,14 +7,18 @@ export const storeOrDestroyLike = async (req: Request, res: Response) => {
 
     const { userId } = req.user as { userId: string }
 
-    const like = await Like.createOrDestroy(+data.quoteId, +userId)
+    const like = await Like.find(+data.quoteId, +userId)
 
     // Here to implement notification
 
     if (like) {
-      res.status(204).json(like)
-    } else {
+      await Like.destroy(like.id)
+
       res.status(204).json({ message: 'Like removed' })
+    } else {
+      const newLike = await Like.create(+data.quoteId, +userId)
+
+      res.status(204).json(newLike)
     }
   } catch (err) {
     console.log(err)

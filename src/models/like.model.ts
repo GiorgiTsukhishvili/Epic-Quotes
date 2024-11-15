@@ -1,17 +1,17 @@
 import { prisma } from '../config/prisma'
 
 export class Like {
-  static async createOrDestroy(quoteId: number, userId: number) {
-    const like = await prisma.like.findFirst({
+  static async find(quoteId: number, userId: number) {
+    return await prisma.like.findFirst({
       where: { quoteId, userId },
     })
+  }
 
-    if (like) {
-      await prisma.like.delete({ where: { id: like.id } })
+  static async create(quoteId: number, userId: number) {
+    return await prisma.like.create({ data: { quoteId, userId } })
+  }
 
-      return null
-    } else {
-      return await prisma.like.create({ data: { quoteId, userId } })
-    }
+  static async destroy(id: number) {
+    await prisma.like.delete({ where: { id } })
   }
 }
