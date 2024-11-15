@@ -31,7 +31,7 @@ import {
 } from '../controllers/email.controller'
 import { createComment } from '../controllers/comment.controller'
 import {
-  createNotification,
+  getNotifications,
   updateNotification,
 } from '../controllers/notification.controller'
 import { storeOrDestroyLike } from '../controllers/like.controller'
@@ -118,7 +118,7 @@ userRouter.post(
 )
 
 userRouter
-  .post('/notifications', createNotification)
+  .get('/notifications', getNotifications)
   .put(
     '/notifications',
     notificationUpdateRequest,
