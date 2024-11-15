@@ -1,12 +1,34 @@
 import { Request, Response } from 'express'
 import { Movie } from '../models/movie.mode'
 import { Tag } from '../models/tag.mode'
+import { MovieTag } from '../models/movieTag.model'
 
 export const getMovies = (req: Request, res: Response) => {}
 
 export const getMovie = (req: Request, res: Response) => {}
 
-export const createMovie = (req: Request, res: Response) => {}
+export const createMovie = async (req: Request, res: Response) => {
+  try {
+    const data = req.body
+
+    const imageUrl = `${process.env.APP_URL}/images/${req.file?.filename}`
+
+    const { id } = req.user as { id: string }
+
+    const movie = await Movie.create(data, +id, imageUrl)
+
+    const tags = JSON.parse(data.tags)
+
+    for (const tagId of tags) {
+      await MovieTag.create(+movie.id, +tagId)
+    }
+
+    res.status(200).json({ message: 'Movie created successfully' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error creating movie' })
+  }
+}
 
 export const updateMovie = (req: Request, res: Response) => {}
 
