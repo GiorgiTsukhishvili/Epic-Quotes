@@ -63,6 +63,7 @@ import {
   refreshToken,
   userInfo,
 } from '../controllers/userState.controller'
+import upload from '../utils/upload'
 
 const userRouter = Router()
 const guestRouter = Router()
@@ -86,7 +87,13 @@ userRouter
   .get('/movies/:id', getMovie)
   .get('/movie-genres', genres)
   .get('/movie-names', names)
-  .post('/movies', movieStoreRequest, validateRequest, createMovie)
+  .post(
+    '/movies',
+    movieStoreRequest,
+    validateRequest,
+    upload.single('image'),
+    createMovie
+  )
   .put('/movies/:id', movieUpdateRequest, validateRequest, updateMovie)
   .delete('/movies/:id', deleteMovie)
 
