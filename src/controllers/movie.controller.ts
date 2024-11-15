@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
-
-const prismaClient = new PrismaClient()
+import { Movie } from '../models/movie.mode'
+import { Tag } from '../models/tag.mode'
 
 export const getMovies = (req: Request, res: Response) => {}
 
@@ -15,7 +14,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    await prismaClient.movie.delete({ where: { id: +id } })
+    await Movie.delete(+id)
 
     res.status(204).json({ message: 'Movie was deleted' })
   } catch (err) {
@@ -28,10 +27,7 @@ export const names = async (req: Request, res: Response) => {
   try {
     const { id } = req.user as { id: number }
 
-    const genres = await prismaClient.movie.findMany({
-      where: { userId: id },
-      select: { name: true },
-    })
+    const genres = await Movie.names(+id)
 
     res.status(200).json(genres)
   } catch (err) {
@@ -42,7 +38,7 @@ export const names = async (req: Request, res: Response) => {
 
 export const genres = async (_: Request, res: Response) => {
   try {
-    const genres = await prismaClient.tag.findMany()
+    const genres = await Tag.findMany()
 
     res.status(200).json(genres)
   } catch (err) {
