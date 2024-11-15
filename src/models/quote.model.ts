@@ -13,6 +13,20 @@ export class Quote {
     })
   }
 
+  static async create(
+    id: number,
+    data: { 'quote-en': string; 'quote-ka': string },
+    image: string
+  ) {
+    return await prisma.quote.create({
+      data: {
+        movieId: id,
+        quote: data,
+        image,
+      },
+    })
+  }
+
   static async delete(id: number) {
     await prisma.quote.delete({ where: { id: +id } })
   }

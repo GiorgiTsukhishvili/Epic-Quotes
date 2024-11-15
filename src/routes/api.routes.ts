@@ -100,7 +100,13 @@ userRouter
 userRouter
   .get('/quotes', getQuotes)
   .get('/quotes/:id', getQuote)
-  .post('/quotes', quoteStoreRequest, validateRequest, createQuote)
+  .post(
+    '/quotes',
+    upload.single('image'),
+    quoteStoreRequest,
+    validateRequest,
+    createQuote
+  )
   .put('/quotes/:id', quoteUpdateRequest, validateRequest, updateQuote)
   .delete('/quotes/:id', deleteQuote)
 
