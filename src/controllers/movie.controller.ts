@@ -5,7 +5,18 @@ import { MovieTag } from '../models/movieTag.model'
 
 export const getMovies = (req: Request, res: Response) => {}
 
-export const getMovie = (req: Request, res: Response) => {}
+export const getMovie = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+
+    const movie = await Movie.find(+id)
+
+    res.status(204).json(movie)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not fetch movie')
+  }
+}
 
 export const createMovie = async (req: Request, res: Response) => {
   try {

@@ -1,6 +1,25 @@
 import { prisma } from '../config/prisma'
 
 export class Movie {
+  static async find(id: number) {
+    return await prisma.movie.findUnique({
+      where: { id },
+      include: {
+        tag: { select: { id: true, tag: true } },
+        quote: {
+          include: {
+            _count: {
+              select: {
+                like: true,
+                comment: true,
+              },
+            },
+          },
+        },
+      },
+    })
+  }
+
   static async create(
     data: {
       'name-en': string
