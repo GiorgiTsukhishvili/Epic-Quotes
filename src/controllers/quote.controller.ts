@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
-
-const prismaClient = new PrismaClient()
+import { Quote } from '../models/quote.model'
 
 export const getQuotes = (req: Request, res: Response) => {}
 
@@ -15,7 +13,7 @@ export const deleteQuote = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    await prismaClient.quote.delete({ where: { id: +id } })
+    await Quote.delete(+id)
 
     res.status(204).json({ message: 'Quote was deleted' })
   } catch (err) {
