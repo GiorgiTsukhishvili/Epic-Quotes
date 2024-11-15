@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import { Request, Response } from 'express'
-
-const prismaClient = new PrismaClient()
+import { Email } from '../models/email.mode'
 
 export const addEmail = (req: Request, res: Response) => {}
 
@@ -13,7 +11,7 @@ export const deleteEmail = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    await prismaClient.quote.delete({ where: { id: +id } })
+    await Email.delete(+id)
 
     res.status(204).json({ message: 'Email was deleted' })
   } catch (err) {
