@@ -1,4 +1,5 @@
 import express from 'express'
+import { json, urlencoded } from 'body-parser'
 import { guestRouter, userRouter } from './routes/api.routes'
 import cors from 'cors'
 import { corsOptions } from './config/cors'
@@ -11,7 +12,8 @@ const PORT = process.env.PORT || 3000
 
 app.use(cors(corsOptions))
 
-app.use(express.json())
+app.use(json())
+app.use(urlencoded({ extended: true }))
 
 app.use(express.static('public'))
 

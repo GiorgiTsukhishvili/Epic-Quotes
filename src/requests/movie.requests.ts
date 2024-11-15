@@ -9,7 +9,12 @@ export const movieStoreRequest = [
   body('director-en').notEmpty().withMessage('Director (en) is required'),
   body('description-ka').notEmpty().withMessage('Description (ka) is required'),
   body('description-en').notEmpty().withMessage('Description (en) is required'),
-  body('image').notEmpty().withMessage('Image is required'),
+  body('image').custom((_, { req }) => {
+    if (!req.file) {
+      throw new Error('Profile image is required')
+    }
+    return true
+  }),
   body('budget').notEmpty().withMessage('Budget is required'),
 ]
 

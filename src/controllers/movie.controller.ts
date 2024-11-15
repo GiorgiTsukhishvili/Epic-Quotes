@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { Movie } from '../models/movie.mode'
-import { Tag } from '../models/tag.mode'
+import { Movie } from '../models/movie.model'
+import { Tag } from '../models/tag.model'
 import { MovieTag } from '../models/movieTag.model'
 
 export const getMovies = (req: Request, res: Response) => {}
@@ -13,9 +13,9 @@ export const createMovie = async (req: Request, res: Response) => {
 
     const imageUrl = `${process.env.APP_URL}/images/${req.file?.filename}`
 
-    const { id } = req.user as { id: string }
+    const { userId } = req.user as { userId: string }
 
-    const movie = await Movie.create(data, +id, imageUrl)
+    const movie = await Movie.create(data, +userId, imageUrl)
 
     const tags = JSON.parse(data.tags)
 

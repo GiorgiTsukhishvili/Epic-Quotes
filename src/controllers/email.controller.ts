@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Email } from '../models/email.mode'
+import { Email } from '../models/email.model'
 
 export const addEmail = (req: Request, res: Response) => {}
 

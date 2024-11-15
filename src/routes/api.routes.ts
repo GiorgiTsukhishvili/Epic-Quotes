@@ -89,9 +89,9 @@ userRouter
   .get('/movie-names', names)
   .post(
     '/movies',
+    upload.single('image'),
     movieStoreRequest,
     validateRequest,
-    upload.single('image'),
     createMovie
   )
   .put('/movies/:id', movieUpdateRequest, validateRequest, updateMovie)
