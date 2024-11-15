@@ -22,4 +22,8 @@ export class Notification {
       ],
     })
   }
+
+  static async markRead(id: number) {
+    await prisma.notification.update({ where: { id }, data: { isNew: false } })
+  }
 }

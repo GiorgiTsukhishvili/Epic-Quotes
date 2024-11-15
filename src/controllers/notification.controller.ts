@@ -14,4 +14,17 @@ export const getNotifications = async (req: Request, res: Response) => {
   }
 }
 
-export const updateNotification = (req: Request, res: Response) => {}
+export const updateNotification = async (req: Request, res: Response) => {
+  try {
+    const { ids } = req.body
+
+    for (let id of ids) {
+      await Notification.markRead(+id)
+    }
+
+    res.status(204).json({ message: 'Notifications updated' })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not update notifications')
+  }
+}
