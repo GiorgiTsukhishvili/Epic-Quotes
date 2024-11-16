@@ -1,15 +1,23 @@
 import { Request, Response } from 'express'
 import { Like } from '../models/like.model'
+import { Notification } from '../models/notification.model'
 
 export const storeOrDestroyLike = async (req: Request, res: Response) => {
   try {
-    const data = req.body as { quoteId: string }
+    const data = req.body as { quoteId: string; personId: string }
 
     const { userId } = req.user as { userId: string }
 
     const like = await Like.find(+data.quoteId, +userId)
 
-    // Here to implement notification
+    if (userId !== data.personId) {
+      await Notification.create({
+        quoteId: +data.quoteId,
+        personId: +userId,
+        userId: +data.personId,
+        isComment: false,
+      })
+    }
 
     if (like) {
       await Like.destroy(like.id)
