@@ -25,7 +25,7 @@ export const tagSeeder = async () => {
       await tagFactory(tag)
     }
 
-    console.log('\x1b[32mMovie tags seed is complete\x1b[32m')
+    console.log('\x1b[32mTags seed is complete\x1b[32m')
   } catch (err) {
     console.log(err)
   }

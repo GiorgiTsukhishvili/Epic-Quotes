@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker/.'
+import { faker } from '@faker-js/faker'
 import { prisma } from '../../config/prisma'
 
 export const emailFactory = async (userId: number) =>
