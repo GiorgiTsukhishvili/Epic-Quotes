@@ -44,7 +44,10 @@ import {
 import { validateRequest } from '../middleware/validator.middleware'
 import { storeOrDestroyLikeRequest } from '../requests/like.requests'
 import { commentStoreRequest } from '../requests/comment.requests'
-import { emailVerificationRequest } from '../requests/email.requests'
+import {
+  addAdditionalEmailRequest,
+  emailVerificationRequest,
+} from '../requests/email.requests'
 import {
   movieStoreRequest,
   movieUpdateRequest,
@@ -137,7 +140,7 @@ userRouter
   .put('/profile', profileUpdateRequest, validateRequest, updateProfile)
 
 userRouter
-  .post('/email', addEmail)
+  .post('/email', addAdditionalEmailRequest, validateRequest, addEmail)
   .post('/make-email-primary/:id', makeEmailPrimary)
   .delete('/email/:id', deleteEmail)
 

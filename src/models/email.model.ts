@@ -5,6 +5,21 @@ export class Email {
     return await prisma.email.findFirst({ where: { verificationToken } })
   }
 
+  static async create(
+    email: string,
+    userId: number,
+    verificationToken: string
+  ) {
+    return await prisma.email.create({
+      data: {
+        email,
+        isPrimary: true,
+        userId,
+        verificationToken,
+      },
+    })
+  }
+
   static async update(email: string, emailVerifiedAt: string) {
     await prisma.email.update({ where: { email }, data: { emailVerifiedAt } })
   }
@@ -13,6 +28,10 @@ export class Email {
     const primaryEmail = await prisma.email.findFirst({
       where: { isPrimary: true },
     })
+
+    if (!primaryEmail?.emailVerifiedAt) {
+      throw new Error('Email is not verified')
+    }
 
     await prisma.email.update({
       where: { id: primaryEmail?.id },

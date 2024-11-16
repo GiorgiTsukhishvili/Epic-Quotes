@@ -3,6 +3,7 @@ import { prisma } from '../config/prisma'
 import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
 import bcrypt from 'bcrypt'
+import { Email } from './email.model'
 
 export class Register {
   static async register(
@@ -23,14 +24,7 @@ export class Register {
 
     const verificationToken = crypto.randomUUID()
 
-    await prisma.email.create({
-      data: {
-        email,
-        is_primary: true,
-        userId: user.id,
-        verificationToken,
-      },
-    })
+    await Email.create(email, +user.id, verificationToken)
 
     // Generate a temporary signed URL for email verification (30 minutes expiration)
     const baseUrl = `${process.env.FRONT_URL}/${lang}`
