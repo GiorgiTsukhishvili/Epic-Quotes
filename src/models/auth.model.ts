@@ -5,7 +5,7 @@ import { emailTranslations } from '../translations/email'
 import bcrypt from 'bcrypt'
 import { Email } from './email.model'
 
-export class Register {
+export class Auth {
   static async register(
     name: string,
     email: string,
@@ -50,5 +50,9 @@ export class Register {
     })
 
     return user
+  }
+
+  static async updatePassword(password: string, userId: number) {
+    await prisma.user.update({ where: { id: userId }, data: { password } })
   }
 }

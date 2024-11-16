@@ -34,6 +34,7 @@ export const newPasswordRequest = [
     .withMessage('Password confirmation is required')
     .custom((value, { req }) => value === req.body.password)
     .withMessage('Passwords do not match'),
+  body('token').notEmpty().withMessage('Token is required'),
 ]
 
 export const passwordResetRequest = [

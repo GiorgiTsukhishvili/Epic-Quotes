@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
 import { generateJWTToken } from '../utils/jwt'
-import { Register } from '../models/auth.model'
+import { Auth } from '../models/auth.model'
 import { Email } from '../models/email.model'
+import bcrypt from 'bcrypt'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ export const register = async (req: Request, res: Response) => {
 
     const lang: 'ka' | 'en' = req.body.lang ?? 'en'
 
-    const user = await Register.register(name, email, password, lang)
+    const user = await Auth.register(name, email, password, lang)
 
     res.status(201).json({
       user: { name, email },
@@ -29,7 +30,22 @@ export const register = async (req: Request, res: Response) => {
 
 export const passwordReset = (req: Request, res: Response) => {}
 
-export const passwordVerify = (req: Request, res: Response) => {}
+export const passwordVerify = async (req: Request, res: Response) => {
+  try {
+    const { token, password } = req.body as { token: string; password: string }
+
+    const email = await Email.find(token)
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    await Auth.updatePassword(hashedPassword, email!.userId)
+
+    res.status(201).json({ error: 'Password updated' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: 'Password could not be updated' })
+  }
+}
 
 export const emailVerify = async (req: Request, res: Response) => {
   try {
