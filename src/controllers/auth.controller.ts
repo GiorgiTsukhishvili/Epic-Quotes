@@ -3,6 +3,9 @@ import { generateJWTToken } from '../utils/jwt'
 import { Auth } from '../models/auth.model'
 import { Email } from '../models/email.model'
 import bcrypt from 'bcrypt'
+import { transporter } from '../config/nodemailer'
+import { verificationEmailTemplate } from '../templates/verification-email.template'
+import { emailTranslations } from '../translations/email'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -28,7 +31,51 @@ export const register = async (req: Request, res: Response) => {
   }
 }
 
-export const passwordReset = (req: Request, res: Response) => {}
+export const passwordReset = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as { userId: string; name: string }
+
+    const email = req.body.email
+
+    const lang: 'ka' | 'en' = req.body.lang ?? 'en'
+
+    const verificationToken = crypto.randomUUID()
+
+    const emailData = await Email.findByEmail(email)
+
+    if (!emailData?.emailVerifiedAt) {
+      res.status(422).send('Email is not verified')
+    }
+
+    // Generate a temporary signed URL for email verification (30 minutes expiration)
+    const baseUrl = `${process.env.FRONT_URL}/${lang}`
+    const verificationLink = new URL(baseUrl)
+
+    verificationLink.searchParams.append(
+      'register-link',
+      `${process.env.APP_URL}/api/v1/password-verify/${verificationToken}`
+    )
+
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: 'Account Verification',
+      html: verificationEmailTemplate(
+        lang,
+        verificationLink,
+        user.name,
+        emailTranslations[lang]['reset-text'],
+        emailTranslations[lang]['reset-button'],
+        emailTranslations[lang]['password-reset']
+      ),
+    })
+
+    res.status(204).json({ message: 'Password reset email was sent' })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not send password reset email')
+  }
+}
 
 export const passwordVerify = async (req: Request, res: Response) => {
   try {

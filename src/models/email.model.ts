@@ -7,6 +7,12 @@ export class Email {
     })
   }
 
+  static async findByEmail(email: string) {
+    return await prisma.email.findFirst({
+      where: { email },
+    })
+  }
+
   static async create(
     email: string,
     userId: number,
