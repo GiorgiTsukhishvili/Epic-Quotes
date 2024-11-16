@@ -10,7 +10,7 @@ export class Profile {
             id: true,
             email: true,
             emailVerifiedAt: true,
-            is_primary: true,
+            isPrimary: true,
             userId: true,
           },
         },

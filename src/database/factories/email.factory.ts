@@ -1,16 +1,13 @@
+import { faker } from '@faker-js/faker/.'
 import { prisma } from '../../config/prisma'
 
-export const emailFactory = async (
-  email: string,
-  userId: number,
-  verificationToken: string
-) =>
+export const emailFactory = async (userId: number) =>
   await prisma.email.create({
     data: {
-      email,
-      is_primary: true,
+      email: faker.internet.email(),
+      isPrimary: true,
       userId,
-      verificationToken,
+      verificationToken: crypto.randomUUID(),
       emailVerifiedAt: new Date(),
     },
   })
