@@ -1,14 +1,14 @@
 import { body } from 'express-validator'
 
 export const movieStoreRequest = [
-  body('name-ka').notEmpty().withMessage('Name (ka) is required'),
-  body('name-en').notEmpty().withMessage('Name (en) is required'),
+  body('nameKa').notEmpty().withMessage('Name (ka) is required'),
+  body('nameEn').notEmpty().withMessage('Name (en) is required'),
   body('tags').notEmpty().withMessage('Tags are required'),
   body('date').notEmpty().withMessage('Date is required'),
-  body('director-ka').notEmpty().withMessage('Director (ka) is required'),
-  body('director-en').notEmpty().withMessage('Director (en) is required'),
-  body('description-ka').notEmpty().withMessage('Description (ka) is required'),
-  body('description-en').notEmpty().withMessage('Description (en) is required'),
+  body('directorKa').notEmpty().withMessage('Director (ka) is required'),
+  body('directorEn').notEmpty().withMessage('Director (en) is required'),
+  body('descriptionKa').notEmpty().withMessage('Description (ka) is required'),
+  body('descriptionEn').notEmpty().withMessage('Description (en) is required'),
   body('image').custom((_, { req }) => {
     if (!req.file) {
       throw new Error('Profile image is required')

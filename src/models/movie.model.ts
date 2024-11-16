@@ -22,12 +22,12 @@ export class Movie {
 
   static async create(
     data: {
-      'name-en': string
-      'name-ka': string
-      'director-en': string
-      'director-ka': string
-      'description-en': string
-      'description-ka': string
+      nameEn: string
+      nameKa: string
+      directorEn: string
+      directorKa: string
+      descriptionEn: string
+      descriptionKa: string
       date: string
       budget: string
     },
@@ -37,16 +37,16 @@ export class Movie {
     return await prisma.movie.create({
       data: {
         name: {
-          en: data['name-en'],
-          ka: data['name-ka'],
+          en: data.nameEn,
+          ka: data.nameKa,
         },
         director: {
-          en: data['director-en'],
-          ka: data['director-ka'],
+          en: data.directorEn,
+          ka: data.directorKa,
         },
         description: {
-          en: data['description-en'],
-          ka: data['description-ka'],
+          en: data.descriptionEn,
+          ka: data.descriptionKa,
         },
         image,
         userId,
