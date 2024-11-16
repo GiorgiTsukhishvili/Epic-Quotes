@@ -12,11 +12,11 @@ export const generateJWTToken = (
     process.env.JWT_REMEMBER_TOKEN_EXPIRATION_DATE
 
   const accessToken = jwt.sign(userInfo, process.env.ACCESS_TOKEN_SECRET!, {
-    expiresIn: remember ? '256h' : jwtTokenExpirationDate,
+    expiresIn: remember ? '256h' : +(jwtTokenExpirationDate ?? 100) * 1000,
   })
 
   const refreshToken = jwt.sign(userInfo, process.env.REFRESH_TOKEN_SECRET!, {
-    expiresIn: jwtTokenRefreshExpirationDate,
+    expiresIn: +(jwtTokenRefreshExpirationDate ?? 1000) * 1000,
   })
 
   const now = new Date().getTime()
