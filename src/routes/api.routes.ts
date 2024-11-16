@@ -27,7 +27,6 @@ import {
   addEmail,
   deleteEmail,
   makeEmailPrimary,
-  verifyAdditionalEmail,
 } from '../controllers/email.controller'
 import { createComment } from '../controllers/comment.controller'
 import {
@@ -72,7 +71,7 @@ userRouter.use(authMiddleware)
 
 guestRouter
   .post('/login', loginRequest, validateRequest, login)
-  .get('/verify', emailVerificationRequest, validateRequest, emailVerify)
+  .get('/verify-email', emailVerificationRequest, validateRequest, emailVerify)
   .post('/refresh-token', refreshTokenRequest, validateRequest, refreshToken)
 
 guestRouter
@@ -140,12 +139,6 @@ userRouter
 userRouter
   .post('/email', addEmail)
   .post('/make-email-primary/:id', makeEmailPrimary)
-  .post(
-    '/verify-email',
-    emailVerificationRequest,
-    validateRequest,
-    verifyAdditionalEmail
-  )
   .delete('/email/:id', deleteEmail)
 
 export { userRouter, guestRouter }

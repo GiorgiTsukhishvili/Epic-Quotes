@@ -9,6 +9,22 @@ export class Email {
     await prisma.email.update({ where: { email }, data: { emailVerifiedAt } })
   }
 
+  static async makePrimary(id: number) {
+    const primaryEmail = await prisma.email.findFirst({
+      where: { isPrimary: true },
+    })
+
+    await prisma.email.update({
+      where: { id: primaryEmail?.id },
+      data: { isPrimary: false },
+    })
+
+    await prisma.email.update({
+      where: { id },
+      data: { isPrimary: true },
+    })
+  }
+
   static async delete(id: number) {
     await prisma.quote.delete({ where: { id } })
   }
