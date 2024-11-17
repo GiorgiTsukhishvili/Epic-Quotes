@@ -1,7 +1,36 @@
 import { Request, Response } from 'express'
 import { Quote } from '../models/quote.model'
 
-export const getQuotes = (req: Request, res: Response) => {}
+export const getQuotes = async (req: Request, res: Response) => {
+  try {
+    const { search, pageSize = 10, page = 1 } = req.query
+
+    const skip = (+page - 1) * +pageSize
+
+    const quotes = await Quote.findMany(
+      +pageSize,
+      +skip,
+      search as string | undefined
+    )
+
+    const totalCount = await Quote.count(search as string | undefined)
+
+    const totalPages = Math.ceil(totalCount / +pageSize)
+
+    res.status(200).json({
+      data: quotes,
+      pagination: {
+        totalCount,
+        totalPages,
+        currentPage: page,
+        pageSize,
+      },
+    })
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not fetch quotes')
+  }
+}
 
 export const getQuote = async (req: Request, res: Response) => {
   try {
@@ -9,7 +38,7 @@ export const getQuote = async (req: Request, res: Response) => {
 
     const quote = await Quote.find(+id)
 
-    res.status(204).json(quote)
+    res.status(200).json(quote)
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch quote')
@@ -31,7 +60,7 @@ export const createQuote = async (req: Request, res: Response) => {
       imageUrl
     )
 
-    res.status(204).json(quote)
+    res.status(200).json(quote)
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not create quote')
@@ -46,7 +75,7 @@ export const deleteQuote = async (req: Request, res: Response) => {
 
     await Quote.delete(+id)
 
-    res.status(204).json({ message: 'Quote was deleted' })
+    res.status(200).json({ message: 'Quote was deleted' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch quote')

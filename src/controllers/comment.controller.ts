@@ -23,7 +23,7 @@ export const createComment = async (req: Request, res: Response) => {
       })
     }
 
-    res.status(204).json(comment)
+    res.status(200).json(comment)
   } catch (err) {
     console.log(err)
     res.status(500).send('Comment could not be created')

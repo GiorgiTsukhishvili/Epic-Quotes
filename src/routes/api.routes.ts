@@ -96,7 +96,7 @@ userRouter
     validateRequest,
     createMovie
   )
-  .put('/movies/:id', movieUpdateRequest, validateRequest, updateMovie)
+  // .put('/movies/:id', movieUpdateRequest, validateRequest, updateMovie)
   .delete('/movies/:id', deleteMovie)
 
 userRouter
@@ -109,7 +109,7 @@ userRouter
     validateRequest,
     createQuote
   )
-  .put('/quotes/:id', quoteUpdateRequest, validateRequest, updateQuote)
+  // .put('/quotes/:id', quoteUpdateRequest, validateRequest, updateQuote)
   .delete('/quotes/:id', deleteQuote)
 
 userRouter.post(
@@ -135,9 +135,8 @@ userRouter.post(
   storeOrDestroyLike
 )
 
-userRouter
-  .get('/profile', getProfile)
-  .put('/profile', profileUpdateRequest, validateRequest, updateProfile)
+userRouter.get('/profile', getProfile)
+// .put('/profile', profileUpdateRequest, validateRequest, updateProfile)
 
 userRouter
   .post('/email', addAdditionalEmailRequest, validateRequest, addEmail)

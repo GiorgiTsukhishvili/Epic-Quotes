@@ -7,7 +7,7 @@ export const getNotifications = async (req: Request, res: Response) => {
 
     const notifications = await Notification.findMany(+userId)
 
-    res.status(204).json(notifications)
+    res.status(200).json(notifications)
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch notifications')
@@ -22,7 +22,7 @@ export const updateNotification = async (req: Request, res: Response) => {
       await Notification.markRead(+id)
     }
 
-    res.status(204).json({ message: 'Notifications updated' })
+    res.status(200).json({ message: 'Notifications updated' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not update notifications')

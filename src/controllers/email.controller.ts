@@ -39,7 +39,7 @@ export const addEmail = async (req: Request, res: Response) => {
       ),
     })
 
-    res.status(204).json({ message: 'Email was add successfully' })
+    res.status(200).json({ message: 'Email was add successfully' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not add email')
@@ -52,7 +52,7 @@ export const makeEmailPrimary = async (req: Request, res: Response) => {
 
     await Email.makePrimary(+id)
 
-    res.status(204).json({ message: 'Email was made primary' })
+    res.status(200).json({ message: 'Email was made primary' })
   } catch (err) {
     console.log(err)
     res
@@ -69,7 +69,7 @@ export const deleteEmail = async (req: Request, res: Response) => {
 
     await Email.delete(+id)
 
-    res.status(204).json({ message: 'Email was deleted' })
+    res.status(200).json({ message: 'Email was deleted' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch email')

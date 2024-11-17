@@ -70,7 +70,7 @@ export const passwordReset = async (req: Request, res: Response) => {
       ),
     })
 
-    res.status(204).json({ message: 'Password reset email was sent' })
+    res.status(200).json({ message: 'Password reset email was sent' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not send password reset email')

@@ -63,7 +63,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
 
     await Movie.delete(+id)
 
-    res.status(204).json({ message: 'Movie was deleted' })
+    res.status(200).json({ message: 'Movie was deleted' })
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch movie')

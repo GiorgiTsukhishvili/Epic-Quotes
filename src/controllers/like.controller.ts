@@ -22,11 +22,11 @@ export const storeOrDestroyLike = async (req: Request, res: Response) => {
     if (like) {
       await Like.destroy(like.id)
 
-      res.status(204).json({ message: 'Like removed' })
+      res.status(200).json({ message: 'Like removed' })
     } else {
       const newLike = await Like.create(+data.quoteId, +userId)
 
-      res.status(204).json(newLike)
+      res.status(200).json(newLike)
     }
   } catch (err) {
     console.log(err)
