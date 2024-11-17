@@ -20,6 +20,22 @@ export class Movie {
     })
   }
 
+  static async findMany(userId: number, search: string | undefined) {
+    return await prisma.movie.findMany({
+      where: search
+        ? {
+            userId,
+            OR: [
+              { name: { path: ['en'], string_contains: search } },
+              { name: { path: ['ka'], string_contains: search } },
+            ],
+          }
+        : {
+            userId,
+          },
+    })
+  }
+
   static async create(
     data: {
       nameEn: string

@@ -3,7 +3,21 @@ import { Movie } from '../models/movie.model'
 import { Tag } from '../models/tag.model'
 import { MovieTag } from '../models/movieTag.model'
 
-export const getMovies = (req: Request, res: Response) => {}
+export const getMovies = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.user as { userId: string }
+
+    const movies = await Movie.findMany(
+      +userId,
+      req.query.search as string | undefined
+    )
+
+    res.status(200).json(movies)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not fetch movies')
+  }
+}
 
 export const getMovie = async (req: Request, res: Response) => {
   try {
@@ -11,7 +25,7 @@ export const getMovie = async (req: Request, res: Response) => {
 
     const movie = await Movie.find(+id)
 
-    res.status(204).json(movie)
+    res.status(200).json(movie)
   } catch (err) {
     console.log(err)
     res.status(500).send('Could not fetch movie')

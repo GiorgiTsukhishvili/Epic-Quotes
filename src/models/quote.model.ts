@@ -15,7 +15,7 @@ export class Quote {
 
   static async create(
     id: number,
-    data: { quoteEn: string; quoteKa: string },
+    data: { en: string; ka: string },
     image: string
   ) {
     return await prisma.quote.create({

@@ -25,8 +25,8 @@ export const createQuote = async (req: Request, res: Response) => {
     const quote = await Quote.create(
       +data.id,
       {
-        quoteEn: data.quoteEn,
-        quoteKa: data.quoteKa,
+        en: data.quoteEn,
+        ka: data.quoteKa,
       },
       imageUrl
     )
