@@ -17,4 +17,11 @@ export class Profile {
       },
     })
   }
+
+  static async update(id: number, data: { image: string; name: string }) {
+    return await prisma.user.update({
+      where: { id },
+      data,
+    })
+  }
 }

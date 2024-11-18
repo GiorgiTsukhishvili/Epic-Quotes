@@ -151,8 +151,15 @@ userRouter.post(
   storeOrDestroyLike
 )
 
-userRouter.get('/profile', getProfile)
-// .put('/profile', profileUpdateRequest, validateRequest, updateProfile)
+userRouter
+  .get('/profile', getProfile)
+  .put(
+    '/profile',
+    upload.single('image'),
+    profileUpdateRequest,
+    validateRequest,
+    updateProfile
+  )
 
 userRouter
   .post('/email', addAdditionalEmailRequest, validateRequest, addEmail)

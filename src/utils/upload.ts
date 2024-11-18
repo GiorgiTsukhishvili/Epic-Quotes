@@ -27,7 +27,7 @@ const storage = multer.diskStorage({
 
 // File filter to validate file types
 const fileFilter = (
-  req: Request,
+  _: Request,
   file: Express.Multer.File,
   cb: FileFilterCallback
 ): void => {
