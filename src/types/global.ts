@@ -1,9 +1,14 @@
-import { JwtPayload } from 'jsonwebtoken'
+import { AuthenticateOptionsGoogle } from 'passport-google-oauth20'
 
 declare global {
   namespace Express {
     interface Request {
-      user?: string | JwtPayload
+      user?: User | undefined
     }
   }
+}
+
+export interface ExtendedAuthenticateOptionsGoogle
+  extends AuthenticateOptionsGoogle {
+  callbackURL: string
 }

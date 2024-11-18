@@ -10,6 +10,7 @@ export class Email {
   static async findByEmail(email: string) {
     return await prisma.email.findFirst({
       where: { email },
+      include: { user: true },
     })
   }
 

@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import passport from 'passport'
 
 import {
   createMovie,
@@ -67,6 +68,11 @@ import {
 } from '../controllers/userState.controller'
 import upload from '../utils/upload'
 
+import {
+  googleCallback,
+  googleRedirect,
+} from '../controllers/google.controller'
+
 const userRouter = Router()
 const guestRouter = Router()
 
@@ -81,6 +87,16 @@ guestRouter
   .post('/register', registerRequest, validateRequest, register)
   .post('/password-reset', passwordResetRequest, validateRequest, passwordReset)
   .post('/password-verify', newPasswordRequest, validateRequest, passwordVerify)
+
+guestRouter.get('/auth/google/redirect/:locale', googleRedirect)
+
+guestRouter.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    scope: ['email', 'profile'],
+  }),
+  googleCallback
+)
 
 userRouter.post('/log-out', logoOut).get('/user-info', userInfo)
 
