@@ -90,7 +90,7 @@ export const updateQuote = async (req: Request, res: Response) => {
     res.status(200).json(quote)
   } catch (err) {
     console.log(err)
-    res.status(500).send('Could not create quote')
+    res.status(500).send('Could not update quote')
   }
 }
 

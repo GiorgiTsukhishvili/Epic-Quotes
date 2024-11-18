@@ -72,6 +72,44 @@ export class Movie {
     })
   }
 
+  static async update(
+    id: number,
+    data: {
+      nameEn: string
+      nameKa: string
+      directorEn: string
+      directorKa: string
+      descriptionEn: string
+      descriptionKa: string
+      date: string
+      budget: string
+    },
+    userId: number,
+    image: string
+  ) {
+    return await prisma.movie.update({
+      where: { id },
+      data: {
+        name: {
+          en: data.nameEn,
+          ka: data.nameKa,
+        },
+        director: {
+          en: data.directorEn,
+          ka: data.directorKa,
+        },
+        description: {
+          en: data.descriptionEn,
+          ka: data.descriptionKa,
+        },
+        image,
+        userId,
+        date: data.date,
+        budget: data.budget,
+      },
+    })
+  }
+
   static async delete(id: number) {
     await prisma.movie.delete({ where: { id: +id } })
   }

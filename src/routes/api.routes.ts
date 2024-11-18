@@ -112,7 +112,13 @@ userRouter
     validateRequest,
     createMovie
   )
-  // .put('/movies/:id', movieUpdateRequest, validateRequest, updateMovie)
+  .put(
+    '/movies/:id',
+    upload.single('image'),
+    movieUpdateRequest,
+    validateRequest,
+    updateMovie
+  )
   .delete('/movies/:id', deleteMovie)
 
 userRouter

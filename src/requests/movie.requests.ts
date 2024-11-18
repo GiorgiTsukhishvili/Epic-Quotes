@@ -19,6 +19,22 @@ export const movieStoreRequest = [
 ]
 
 export const movieUpdateRequest = [
-  body('id').notEmpty().withMessage('Movie Id is required'),
-  ...movieStoreRequest,
+  body('image').custom((value, { req }) => {
+    if (typeof value === 'string') {
+      return true
+    }
+    if (!req.file) {
+      throw new Error('Profile image is required')
+    }
+
+    return true
+  }),
+  body('nameKa').notEmpty().withMessage('Name (ka) is required'),
+  body('nameEn').notEmpty().withMessage('Name (en) is required'),
+  body('tags').notEmpty().withMessage('Tags are required'),
+  body('date').notEmpty().withMessage('Date is required'),
+  body('directorKa').notEmpty().withMessage('Director (ka) is required'),
+  body('directorEn').notEmpty().withMessage('Director (en) is required'),
+  body('descriptionKa').notEmpty().withMessage('Description (ka) is required'),
+  body('descriptionEn').notEmpty().withMessage('Description (en) is required'),
 ]

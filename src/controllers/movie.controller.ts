@@ -55,7 +55,32 @@ export const createMovie = async (req: Request, res: Response) => {
   }
 }
 
-export const updateMovie = (req: Request, res: Response) => {}
+export const updateMovie = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id
+
+    const data = req.body
+
+    if (req.file) {
+      data.image = `${process.env.APP_URL}/images/${req.file?.filename}`
+    }
+
+    const { userId } = req.user as { userId: string }
+
+    const movie = await Movie.update(+id, data, +userId, data.image)
+
+    const tags = JSON.parse(data.tags)
+
+    for (const tagId of tags) {
+      await MovieTag.create(+movie.id, +tagId)
+    }
+
+    res.status(200).json(movie)
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Error updating movie' })
+  }
+}
 
 export const deleteMovie = async (req: Request, res: Response) => {
   try {
