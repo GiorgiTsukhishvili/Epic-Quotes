@@ -7,7 +7,7 @@ export const getProfile = async (req: Request, res: Response) => {
 
     const profile = await Profile.find(+userId)
 
-    res.status(201).send(profile)
+    res.status(204).send(profile)
   } catch (err) {
     console.log(err)
     res.status(500).send('Profile could not be retrieved')
@@ -29,7 +29,7 @@ export const updateProfile = async (req: Request, res: Response) => {
       data as { image: string; name: string }
     )
 
-    res.status(201).send(profile)
+    res.status(200).send(profile)
   } catch (err) {
     console.log(err)
     res.status(500).send('Profile could not be updated')
