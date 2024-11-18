@@ -10,7 +10,10 @@ import http from 'http'
 
 import './types/global'
 import './utils/passport'
-import { createWebSocketServer } from './routes/channel.routes'
+import {
+  broadcastMessageToUser,
+  createWebSocketServer,
+} from './routes/channel.routes'
 
 require('dotenv').config()
 

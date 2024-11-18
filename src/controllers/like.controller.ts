@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Like } from '../models/like.model'
 import { Notification } from '../models/notification.model'
+import { broadcastMessageToUser } from '../routes/channel.routes'
 
 export const storeOrDestroyLike = async (req: Request, res: Response) => {
   try {
@@ -17,6 +18,8 @@ export const storeOrDestroyLike = async (req: Request, res: Response) => {
         userId: +data.personId,
         isComment: false,
       })
+
+      broadcastMessageToUser(+userId, 'New like')
     }
 
     if (like) {

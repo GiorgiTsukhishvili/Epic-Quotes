@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Comment } from '../models/comment.model'
 import { Notification } from '../models/notification.model'
+import { broadcastMessageToUser } from '../routes/channel.routes'
 
 export const createComment = async (req: Request, res: Response) => {
   try {
@@ -21,6 +22,8 @@ export const createComment = async (req: Request, res: Response) => {
         userId: +data.personId,
         isComment: false,
       })
+
+      broadcastMessageToUser(+userId, 'New comment')
     }
 
     res.status(200).json(comment)
