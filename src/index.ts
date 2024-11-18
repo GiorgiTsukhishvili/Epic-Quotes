@@ -5,6 +5,8 @@ import cors from 'cors'
 import { corsOptions } from './config/cors'
 import session from 'express-session'
 import passport from 'passport'
+import cookieParser from 'cookie-parser'
+
 import './types/global'
 import './utils/passport'
 
@@ -17,6 +19,7 @@ app.use(cors(corsOptions))
 
 app.use(json())
 app.use(urlencoded({ extended: true }))
+app.use(cookieParser())
 
 app.use(
   session({

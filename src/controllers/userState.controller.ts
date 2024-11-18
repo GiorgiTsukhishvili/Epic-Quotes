@@ -52,7 +52,15 @@ export const login = async (req: Request, res: Response) => {
   }
 }
 
-export const logoOut = (req: Request, res: Response) => {}
+export const logoOut = (req: Request, res: Response) => {
+  res.clearCookie('refreshToken', {
+    secure: true,
+    sameSite: 'strict',
+    httpOnly: true,
+  })
+
+  res.status(200).json({ message: 'User logged out' })
+}
 
 export const refreshToken = (req: Request, res: Response) => {
   const { refreshToken } = req.body
