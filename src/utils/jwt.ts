@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+import jwt, { JwtPayload } from 'jsonwebtoken'
 
 export const generateJWTToken = (
   userInfo: {
@@ -30,5 +30,13 @@ export const generateJWTToken = (
     rememberTokenExpiresIn: new Date(
       now + +(jwtTokenRefreshExpirationDate ?? 1000) * 1000
     ).getTime(),
+  }
+}
+
+export function verifyToken(token: string): JwtPayload | string | null {
+  try {
+    return jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!)
+  } catch (error) {
+    return null
   }
 }

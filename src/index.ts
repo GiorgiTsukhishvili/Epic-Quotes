@@ -6,14 +6,20 @@ import { corsOptions } from './config/cors'
 import session from 'express-session'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
+import http from 'http'
 
 import './types/global'
 import './utils/passport'
+import { createWebSocketServer } from './routes/channel.routes'
 
 require('dotenv').config()
 
 const app = express()
 const PORT = process.env.PORT || 3000
+
+const server = http.createServer(app)
+
+createWebSocketServer(server)
 
 app.use(cors(corsOptions))
 
@@ -37,6 +43,6 @@ app.use(express.static('public'))
 app.use('/api/v1', guestRouter)
 app.use('/api/v1', userRouter)
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`)
 })
