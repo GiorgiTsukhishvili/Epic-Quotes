@@ -14,5 +14,16 @@ export const quoteStoreRequest = [
 
 export const quoteUpdateRequest = [
   body('id').notEmpty().withMessage('Quote Id is required'),
-  ...quoteStoreRequest,
+  body('image').custom((value, { req }) => {
+    if (typeof value === 'string') {
+      return true
+    }
+    if (!req.file) {
+      throw new Error('Profile image is required')
+    }
+
+    return true
+  }),
+  body('quoteEn').notEmpty().withMessage('English quote is required'),
+  body('quoteKa').notEmpty().withMessage('Georgian quote is required'),
 ]

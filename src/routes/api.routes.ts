@@ -125,7 +125,13 @@ userRouter
     validateRequest,
     createQuote
   )
-  // .put('/quotes/:id', quoteUpdateRequest, validateRequest, updateQuote)
+  .put(
+    '/quotes/:id',
+    upload.single('image'),
+    quoteUpdateRequest,
+    validateRequest,
+    updateQuote
+  )
   .delete('/quotes/:id', deleteQuote)
 
 userRouter.post(

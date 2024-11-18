@@ -5,7 +5,6 @@ export const profileUpdateRequest = [
     if (typeof value === 'string') {
       return true
     }
-
     if (!req.file) {
       throw new Error('Profile image is required')
     }

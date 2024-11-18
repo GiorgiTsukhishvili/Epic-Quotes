@@ -93,6 +93,22 @@ export class Quote {
     })
   }
 
+  static async update(
+    id: number,
+    movieId: number,
+    data: { en: string; ka: string },
+    image: string
+  ) {
+    return await prisma.quote.update({
+      where: { id },
+      data: {
+        movieId,
+        quote: data,
+        image,
+      },
+    })
+  }
+
   static async delete(id: number) {
     await prisma.quote.delete({ where: { id: +id } })
   }

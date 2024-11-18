@@ -67,7 +67,32 @@ export const createQuote = async (req: Request, res: Response) => {
   }
 }
 
-export const updateQuote = (req: Request, res: Response) => {}
+export const updateQuote = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id
+
+    const data = req.body
+
+    if (req.file) {
+      data.image = `${process.env.APP_URL}/images/${req.file?.filename}`
+    }
+
+    const quote = await Quote.update(
+      +id,
+      +data.id,
+      {
+        en: data.quoteEn,
+        ka: data.quoteKa,
+      },
+      data.image
+    )
+
+    res.status(200).json(quote)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Could not create quote')
+  }
+}
 
 export const deleteQuote = async (req: Request, res: Response) => {
   try {
