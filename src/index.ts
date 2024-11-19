@@ -7,13 +7,11 @@ import session from 'express-session'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
 import http from 'http'
+import { createWebSocketServer } from './routes/channel.routes'
 
 import './types/global'
 import './utils/passport'
-import {
-  broadcastMessageToUser,
-  createWebSocketServer,
-} from './routes/channel.routes'
+import logger from './config/winston'
 
 require('dotenv').config()
 
@@ -47,5 +45,5 @@ app.use('/api/v1', guestRouter)
 app.use('/api/v1', userRouter)
 
 server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
+  logger.info(`Server is running on http://localhost:${PORT}`)
 })
