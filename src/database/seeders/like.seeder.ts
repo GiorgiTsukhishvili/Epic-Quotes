@@ -7,6 +7,6 @@ export const likeSeeder = async () => {
 
     logger.info('Like seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }

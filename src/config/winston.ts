@@ -14,8 +14,9 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.colorize({ all: true }),
-    winston.format.printf(({ level, message, timestamp }) => {
-      return `${timestamp} [${level.toUpperCase()}]: ${message}`
+    winston.format.errors({ stack: true }),
+    winston.format.printf(({ level, message, timestamp, stack }) => {
+      return `${timestamp} [${level.toUpperCase()}]: ${stack ?? message}`
     })
   ),
 

@@ -7,6 +7,6 @@ export const commentSeeder = async () => {
 
     logger.info('Comment seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }

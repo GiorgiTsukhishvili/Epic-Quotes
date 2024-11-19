@@ -10,6 +10,6 @@ export const userAndEmailSeeder = async () => {
 
     logger.info('User and Email seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }

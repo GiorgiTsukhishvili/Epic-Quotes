@@ -7,6 +7,6 @@ export const movieSeeder = async () => {
 
     logger.info('Movie seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }

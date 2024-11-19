@@ -7,6 +7,6 @@ export const quoteSeeder = async () => {
 
     logger.info('Quote seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }

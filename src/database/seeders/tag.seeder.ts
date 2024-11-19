@@ -28,6 +28,6 @@ export const tagSeeder = async () => {
 
     logger.info('Tags seed is complete')
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }
