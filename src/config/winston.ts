@@ -1,13 +1,24 @@
 import winston from 'winston'
 
+const customColors = {
+  error: 'red',
+  warn: 'yellow',
+  info: 'green',
+  debug: 'blue',
+}
+
+winston.addColors(customColors)
+
 const logger = winston.createLogger({
   level: 'info', // Minimum log level for all transports
   format: winston.format.combine(
     winston.format.timestamp(),
+    winston.format.colorize({ all: true }),
     winston.format.printf(({ level, message, timestamp }) => {
       return `${timestamp} [${level.toUpperCase()}]: ${message}`
     })
   ),
+
   transports: [
     // Console transport to log everything
     new winston.transports.Console({
