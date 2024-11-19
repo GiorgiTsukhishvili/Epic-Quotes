@@ -1,6 +1,7 @@
 import { Request } from 'express'
 import WebSocket, { WebSocketServer } from 'ws'
 import { verifyToken } from '../utils/jwt'
+import logger from '../config/winston'
 let connections: { ws: WebSocket; userId: number }[] = []
 
 export function createWebSocketServer(server: any) {
@@ -22,16 +23,16 @@ export function createWebSocketServer(server: any) {
     }
 
     const userId = (decoded as { userId: number }).userId
-    console.log(`User ${userId} connected`)
+    logger.info(`User ${userId} connected`)
 
     // Handle incoming messages from the WebSocket client
     ws.on('message', (message: string) => {
-      console.log(`Received message: ${message}`)
+      logger.info(`Received message: ${message}`)
     })
 
     // Handle connection close
     ws.on('close', () => {
-      console.log(`User ${userId} disconnected`)
+      logger.info(`User ${userId} disconnected`)
       connections = connections.filter((conn) => conn.ws !== ws)
     })
 

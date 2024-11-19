@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { Notification } from '../models/notification.model'
+import logger from '../config/winston'
 
 export const getNotifications = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ export const getNotifications = async (req: Request, res: Response) => {
 
     res.status(200).json(notifications)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not fetch notifications')
   }
 }
@@ -24,7 +25,7 @@ export const updateNotification = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Notifications updated' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not update notifications')
   }
 }

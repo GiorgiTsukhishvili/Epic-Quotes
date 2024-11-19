@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { Like } from '../models/like.model'
 import { Notification } from '../models/notification.model'
 import { broadcastMessageToUser } from '../routes/channel.routes'
+import logger from '../config/winston'
 
 export const storeOrDestroyLike = async (req: Request, res: Response) => {
   try {
@@ -32,7 +33,7 @@ export const storeOrDestroyLike = async (req: Request, res: Response) => {
       res.status(200).json(newLike)
     }
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Like could not be created or destroyed')
   }
 }

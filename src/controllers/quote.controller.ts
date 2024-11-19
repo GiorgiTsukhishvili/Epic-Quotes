@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { Quote } from '../models/quote.model'
+import logger from '../config/winston'
 
 export const getQuotes = async (req: Request, res: Response) => {
   try {
@@ -27,7 +28,7 @@ export const getQuotes = async (req: Request, res: Response) => {
       },
     })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not fetch quotes')
   }
 }
@@ -40,7 +41,7 @@ export const getQuote = async (req: Request, res: Response) => {
 
     res.status(200).json(quote)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not fetch quote')
   }
 }
@@ -62,7 +63,7 @@ export const createQuote = async (req: Request, res: Response) => {
 
     res.status(200).json(quote)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not create quote')
   }
 }
@@ -89,7 +90,7 @@ export const updateQuote = async (req: Request, res: Response) => {
 
     res.status(200).json(quote)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not update quote')
   }
 }
@@ -102,7 +103,7 @@ export const deleteQuote = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Quote was deleted' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not fetch quote')
   }
 }

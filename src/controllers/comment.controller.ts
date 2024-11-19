@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { Comment } from '../models/comment.model'
 import { Notification } from '../models/notification.model'
 import { broadcastMessageToUser } from '../routes/channel.routes'
+import logger from '../config/winston'
 
 export const createComment = async (req: Request, res: Response) => {
   try {
@@ -28,7 +29,7 @@ export const createComment = async (req: Request, res: Response) => {
 
     res.status(200).json(comment)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Comment could not be created')
   }
 }

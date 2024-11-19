@@ -3,6 +3,7 @@ import passport from 'passport'
 import { ExtendedAuthenticateOptionsGoogle } from '../types/global'
 import { generateJWTToken } from '../utils/jwt'
 import { Email } from '../models/email.model'
+import logger from '../config/winston'
 
 export const googleCallback = async (req: Request, res: Response) => {
   try {
@@ -31,7 +32,7 @@ export const googleCallback = async (req: Request, res: Response) => {
       ),
     })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res
       .status(500)
       .json({ error: 'An error occurred while fetching google user' })

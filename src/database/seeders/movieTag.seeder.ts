@@ -14,7 +14,6 @@ export const movieTagSeeder = async () => {
 
     logger.info('Movie tags  seed is complete')
   } catch (err) {
-    // console.log(err)
     logger.error(err)
   }
 }

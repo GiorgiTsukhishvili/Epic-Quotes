@@ -3,6 +3,7 @@ import { Email } from '../models/email.model'
 import { transporter } from '../config/nodemailer'
 import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
+import logger from '../config/winston'
 
 export const addEmail = async (req: Request, res: Response) => {
   try {
@@ -41,7 +42,7 @@ export const addEmail = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Email was add successfully' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not add email')
   }
 }
@@ -54,7 +55,7 @@ export const makeEmailPrimary = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Email was made primary' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res
       .status(500)
       .send(
@@ -71,7 +72,7 @@ export const deleteEmail = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Email was deleted' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not fetch email')
   }
 }

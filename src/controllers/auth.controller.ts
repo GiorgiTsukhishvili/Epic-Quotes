@@ -8,6 +8,7 @@ import { verificationEmailTemplate } from '../templates/verification-email.templ
 import { emailTranslations } from '../translations/email'
 import redisClient from '../config/redis'
 import { User } from '../models/user.model'
+import logger from '../config/winston'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -19,7 +20,7 @@ export const register = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: 'Email sent to user' })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({ error: 'An error occurred while creating the user' })
   }
 }
@@ -65,7 +66,7 @@ export const passwordReset = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: 'Password reset email was sent' })
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Could not send password reset email')
   }
 }
@@ -82,7 +83,7 @@ export const passwordVerify = async (req: Request, res: Response) => {
 
     res.status(201).json({ error: 'Password updated' })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({ error: 'Password could not be updated' })
   }
 }
@@ -114,7 +115,7 @@ export const emailVerify = async (req: Request, res: Response) => {
 
     res.status(201).json({ error: 'Email verified' })
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     res.status(500).json({ error: 'Email could not be verified' })
   }
 }

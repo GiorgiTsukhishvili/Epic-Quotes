@@ -5,6 +5,7 @@ import { movieTagSeeder } from './movieTag.seeder'
 import { quoteSeeder } from './quote.seeder'
 import { likeSeeder } from './like.seeder'
 import { commentSeeder } from './comment.seeder'
+import logger from '../../config/winston'
 
 const main = async () => {
   try {
@@ -16,7 +17,7 @@ const main = async () => {
     await likeSeeder()
     await commentSeeder()
   } catch (err) {
-    console.log(err)
+    logger.error(err)
   }
 }
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { Profile } from '../models/profile.model'
+import logger from '../config/winston'
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
@@ -9,7 +10,7 @@ export const getProfile = async (req: Request, res: Response) => {
 
     res.status(204).send(profile)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Profile could not be retrieved')
   }
 }
@@ -31,7 +32,7 @@ export const updateProfile = async (req: Request, res: Response) => {
 
     res.status(200).send(profile)
   } catch (err) {
-    console.log(err)
+    logger.error(err)
     res.status(500).send('Profile could not be updated')
   }
 }

@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import { NextFunction, Request, Response } from 'express'
+import logger from '../config/winston'
 
 export const authMiddleware = (
   req: Request,
@@ -16,7 +17,7 @@ export const authMiddleware = (
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err, user) => {
     if (err) {
-      console.log(err)
+      logger.error(err)
       res.status(401).json({ message: 'Access token invalid' })
       return
     }
