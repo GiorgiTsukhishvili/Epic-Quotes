@@ -1,3 +1,4 @@
+import logger from '../../config/winston'
 import { tagFactory } from '../factories/tag.factory'
 
 const movieTags = [
@@ -25,7 +26,7 @@ export const tagSeeder = async () => {
       await tagFactory(tag)
     }
 
-    console.log('\x1b[32mTags seed is complete\x1b[32m')
+    logger.info('Tags seed is complete')
   } catch (err) {
     console.log(err)
   }

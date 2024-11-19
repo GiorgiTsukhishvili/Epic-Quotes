@@ -1,10 +1,11 @@
+import logger from '../../config/winston'
 import { quoteFactory } from '../factories/quote.factory'
 
 export const quoteSeeder = async () => {
   try {
     await quoteFactory()
 
-    console.log('\x1b[32mQuote seed is complete\x1b[32m')
+    logger.info('Quote seed is complete')
   } catch (err) {
     console.log(err)
   }

@@ -1,10 +1,11 @@
+import logger from '../../config/winston'
 import { movieFactory } from '../factories/movie.factory'
 
 export const movieSeeder = async () => {
   try {
     await movieFactory()
 
-    console.log('\x1b[32mMovie seed is complete\x1b[32m')
+    logger.info('Movie seed is complete')
   } catch (err) {
     console.log(err)
   }

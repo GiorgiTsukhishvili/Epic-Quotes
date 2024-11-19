@@ -1,10 +1,11 @@
+import logger from '../../config/winston'
 import { likeFactory } from '../factories/like.factory'
 
 export const likeSeeder = async () => {
   try {
     await likeFactory()
 
-    console.log('\x1b[32mLike seed is complete\x1b[32m')
+    logger.info('Like seed is complete')
   } catch (err) {
     console.log(err)
   }

@@ -1,4 +1,5 @@
 import { prisma } from '../../config/prisma'
+import logger from '../../config/winston'
 import { movieTagFactory } from '../factories/movieTag.factory'
 
 export const movieTagSeeder = async () => {
@@ -11,7 +12,7 @@ export const movieTagSeeder = async () => {
       await movieTagFactory(movie!.id, tag.id)
     }
 
-    console.log('\x1b[32mMovie tags  seed is complete\x1b[32m')
+    logger.info('Movie tags  seed is complete')
   } catch (err) {
     console.log(err)
   }
