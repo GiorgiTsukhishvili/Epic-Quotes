@@ -17,8 +17,6 @@ export class Auth {
 
     const verificationToken = crypto.randomUUID()
 
-    console.log(verificationToken)
-
     await redisClient.set(
       verificationToken,
       JSON.stringify({
