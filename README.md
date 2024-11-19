@@ -17,6 +17,8 @@ A RESTful API for managing movie quotes. This application allows users to add, u
 - **TypeScript**: Type-safe JavaScript for better code quality and maintenance.
 - **multer**: Middleware for handling image uploads (for movie posters or user profile pictures).
 - **Prisma Migrations**: For managing the database schema.
+- **Winston Logger**: For managing the logs.
+- **Redis Caching**: For managing the cache.
 
 ## Installation
 
