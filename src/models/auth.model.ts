@@ -3,7 +3,6 @@ import { prisma } from '../config/prisma'
 import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
 import bcrypt from 'bcrypt'
-import { Email } from './email.model'
 import redisClient from '../config/redis'
 
 export class Auth {
