@@ -6,6 +6,8 @@ import bcrypt from 'bcrypt'
 import { transporter } from '../config/nodemailer'
 import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
+import redisClient from '../config/redis'
+import { User } from '../models/user.model'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -13,18 +15,9 @@ export const register = async (req: Request, res: Response) => {
 
     const lang: 'ka' | 'en' = req.body.lang ?? 'en'
 
-    const user = await Auth.register(name, email, password, lang)
+    await Auth.register(name, email, password, lang)
 
-    res.status(201).json({
-      user: { name, email },
-      tokens: generateJWTToken(
-        {
-          userId: user.id,
-          userName: user.name,
-        },
-        false
-      ),
-    })
+    res.status(201).json({ message: 'Email sent to user' })
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'An error occurred while creating the user' })
@@ -98,15 +91,28 @@ export const emailVerify = async (req: Request, res: Response) => {
   try {
     const { token } = req.body as { token: string }
 
-    const email = await Email.find(token)
+    const data = await redisClient.get(token)
 
-    if (email?.emailVerifiedAt) {
-      res.status(422).json({ error: 'Email is already verified' })
-    } else {
-      await Email.update(email!.email, new Date().toString())
-
-      res.status(201).json({ error: 'Email verified' })
+    const userInfo = JSON.parse(data ?? '{}') as {
+      email: { email: string }
+      user: {
+        name: string
+        password: string
+        image: string
+      }
     }
+
+    const user = await User.create(
+      userInfo.user.name,
+      userInfo.user.password,
+      userInfo.user.image
+    )
+
+    await Email.create(userInfo.email.email, +user.id, token)
+
+    await redisClient.del(token)
+
+    res.status(201).json({ error: 'Email verified' })
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Email could not be verified' })

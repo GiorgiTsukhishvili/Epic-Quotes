@@ -4,6 +4,7 @@ import { verificationEmailTemplate } from '../templates/verification-email.templ
 import { emailTranslations } from '../translations/email'
 import bcrypt from 'bcrypt'
 import { Email } from './email.model'
+import redisClient from '../config/redis'
 
 export class Auth {
   static async register(
@@ -14,17 +15,22 @@ export class Auth {
   ) {
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    const user = await prisma.user.create({
-      data: {
-        name,
-        password: hashedPassword,
-        image: `${process.env.APP_URL}/imgs/default.png`,
-      },
-    })
-
     const verificationToken = crypto.randomUUID()
 
-    await Email.create(email, +user.id, verificationToken)
+    console.log(verificationToken)
+
+    await redisClient.set(
+      verificationToken,
+      JSON.stringify({
+        email: { email },
+        user: {
+          name,
+          password: hashedPassword,
+          image: `${process.env.APP_URL}/imgs/default.png`,
+        },
+      }),
+      { EX: 1800, NX: true }
+    )
 
     // Generate a temporary signed URL for email verification (30 minutes expiration)
     const baseUrl = `${process.env.FRONT_URL}/${lang}`
@@ -42,14 +48,12 @@ export class Auth {
       html: verificationEmailTemplate(
         lang,
         verificationLink,
-        user.name,
+        name,
         emailTranslations[lang]['joining-text'],
         emailTranslations[lang]['verify-button'],
         emailTranslations[lang]['account-verification']
       ),
     })
-
-    return user
   }
 
   static async updatePassword(password: string, userId: number) {

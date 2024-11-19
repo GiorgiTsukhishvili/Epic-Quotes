@@ -25,6 +25,7 @@ export class Email {
         isPrimary: true,
         userId,
         verificationToken,
+        emailVerifiedAt: new Date().toString(),
       },
     })
   }
