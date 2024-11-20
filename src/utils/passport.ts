@@ -41,7 +41,7 @@ passport.use(
           data: {
             email,
             userId: newUser.id,
-            emailVerifiedAt: new Date().toString(),
+            emailVerifiedAt: new Date().toISOString(),
             isPrimary: true,
           },
         })

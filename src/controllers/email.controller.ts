@@ -20,8 +20,6 @@ export const addEmail = async (req: Request, res: Response) => {
 
     await redisClient.set(verificationToken, email, { EX: 1800, NX: true })
 
-    console.log(verificationToken)
-
     // Generate a temporary signed URL for email verification (30 minutes expiration)
     const baseUrl = `${process.env.FRONT_URL}/${lang}`
     const verificationLink = new URL(baseUrl)

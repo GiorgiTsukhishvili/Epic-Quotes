@@ -19,7 +19,7 @@ export const movieFactory = async () => {
         en: faker.person.fullName(),
         ka: faker.person.fullName(),
       } as Prisma.JsonObject,
-      date: new Date().toString(),
+      date: new Date().toISOString(),
       budget: '10000',
       image: `${process.env.APP_URL}/imgs/default.png`,
       userId: user!.id,

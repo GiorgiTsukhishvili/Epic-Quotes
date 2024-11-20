@@ -7,6 +7,6 @@ export const emailFactory = async (userId: number) =>
       email: faker.internet.email(),
       isPrimary: true,
       userId,
-      emailVerifiedAt: new Date(),
+      emailVerifiedAt: new Date().toISOString(),
     },
   })
