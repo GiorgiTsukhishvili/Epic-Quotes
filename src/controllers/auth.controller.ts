@@ -128,3 +128,24 @@ export const emailVerify = async (req: Request, res: Response) => {
     res.status(500).json({ error: 'Email could not be verified' })
   }
 }
+
+export const additionalEmailVerify = async (req: Request, res: Response) => {
+  try {
+    const { token } = req.body as { token: string }
+
+    const email = await redisClient.get(token)
+
+    if (email) {
+      await Email.update(email, new Date().toISOString())
+
+      await redisClient.del(token)
+
+      res.status(201).json({ error: 'Email verified' })
+    } else {
+      res.status(500).json({ error: 'Email could not be verified' })
+    }
+  } catch (error) {
+    logger.error(error)
+    res.status(500).json({ error: 'Email could not be verified' })
+  }
+}

@@ -18,6 +18,7 @@ import {
   updateQuote,
 } from '../controllers/quote.controller'
 import {
+  additionalEmailVerify,
   emailVerify,
   passwordReset,
   passwordVerify,
@@ -47,6 +48,7 @@ import { storeOrDestroyLikeRequest } from '../requests/like.requests'
 import { commentStoreRequest } from '../requests/comment.requests'
 import {
   addAdditionalEmailRequest,
+  additionalEmailVerifyRequest,
   emailVerificationRequest,
 } from '../requests/email.requests'
 import {
@@ -82,6 +84,12 @@ guestRouter
   .post('/login', loginRequest, validateRequest, login)
   .get('/verify-email', emailVerificationRequest, validateRequest, emailVerify)
   .post('/refresh-token', refreshTokenRequest, validateRequest, refreshToken)
+  .post(
+    '/verify-additional-email',
+    additionalEmailVerifyRequest,
+    validateRequest,
+    additionalEmailVerify
+  )
 
 guestRouter
   .post('/register', registerRequest, validateRequest, register)

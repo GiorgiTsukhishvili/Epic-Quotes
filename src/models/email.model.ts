@@ -14,7 +14,7 @@ export class Email {
         email,
         isPrimary: true,
         userId,
-        emailVerifiedAt: new Date().toString(),
+        emailVerifiedAt: new Date().toISOString(),
       },
     })
   }

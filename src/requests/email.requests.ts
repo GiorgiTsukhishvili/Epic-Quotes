@@ -11,3 +11,7 @@ export const addAdditionalEmailRequest = [
     .isEmail()
     .withMessage('Must be a valid email address'),
 ]
+
+export const additionalEmailVerifyRequest = [
+  body('token').notEmpty().withMessage('Token is required'),
+]
