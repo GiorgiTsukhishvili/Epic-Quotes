@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { generateJWTToken } from '../utils/jwt'
 import { Auth } from '../models/auth.model'
 import { Email } from '../models/email.model'
 import bcrypt from 'bcrypt'
@@ -86,6 +85,8 @@ export const passwordVerify = async (req: Request, res: Response) => {
 
       await Auth.updatePassword(hashedPassword, emailData!.userId)
 
+      await redisClient.del(token)
+
       res.status(201).json({ error: 'Password updated' })
     } else {
       res.status(500).json({ error: 'Password could not be updated' })
@@ -117,7 +118,7 @@ export const emailVerify = async (req: Request, res: Response) => {
       userInfo.user.image
     )
 
-    await Email.create(userInfo.email.email, +user.id, token)
+    await Email.create(userInfo.email.email, +user.id)
 
     await redisClient.del(token)
 

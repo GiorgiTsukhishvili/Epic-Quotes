@@ -1,12 +1,6 @@
 import { prisma } from '../config/prisma'
 
 export class Email {
-  static async find(verificationToken: string) {
-    return await prisma.email.findFirst({
-      where: { verificationToken },
-    })
-  }
-
   static async findByEmail(email: string) {
     return await prisma.email.findFirst({
       where: { email },
@@ -14,17 +8,12 @@ export class Email {
     })
   }
 
-  static async create(
-    email: string,
-    userId: number,
-    verificationToken: string
-  ) {
+  static async create(email: string, userId: number) {
     return await prisma.email.create({
       data: {
         email,
         isPrimary: true,
         userId,
-        verificationToken,
         emailVerifiedAt: new Date().toString(),
       },
     })

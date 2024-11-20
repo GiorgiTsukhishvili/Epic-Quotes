@@ -4,6 +4,7 @@ import { transporter } from '../config/nodemailer'
 import { verificationEmailTemplate } from '../templates/verification-email.template'
 import { emailTranslations } from '../translations/email'
 import logger from '../config/winston'
+import redisClient from '../config/redis'
 
 export const addEmail = async (req: Request, res: Response) => {
   try {
@@ -15,7 +16,9 @@ export const addEmail = async (req: Request, res: Response) => {
 
     const verificationToken = crypto.randomUUID()
 
-    await Email.create(email, +user.userId, verificationToken)
+    await Email.create(email, +user.userId)
+
+    await redisClient.set(verificationToken, email, { EX: 1800, NX: true })
 
     // Generate a temporary signed URL for email verification (30 minutes expiration)
     const baseUrl = `${process.env.FRONT_URL}/${lang}`
