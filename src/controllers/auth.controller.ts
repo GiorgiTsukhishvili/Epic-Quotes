@@ -37,6 +37,8 @@ export const passwordReset = async (req: Request, res: Response) => {
 
     const emailData = await Email.findByEmail(email)
 
+    await redisClient.set(verificationToken, email, { EX: 1800, NX: true })
+
     if (!emailData?.emailVerifiedAt) {
       res.status(422).send('Email is not verified')
     }
@@ -75,13 +77,19 @@ export const passwordVerify = async (req: Request, res: Response) => {
   try {
     const { token, password } = req.body as { token: string; password: string }
 
-    const email = await Email.find(token)
+    const cachedEmail = await redisClient.get(token)
 
-    const hashedPassword = await bcrypt.hash(password, 10)
+    if (cachedEmail) {
+      const emailData = await Email.findByEmail(cachedEmail)
 
-    await Auth.updatePassword(hashedPassword, email!.userId)
+      const hashedPassword = await bcrypt.hash(password, 10)
 
-    res.status(201).json({ error: 'Password updated' })
+      await Auth.updatePassword(hashedPassword, emailData!.userId)
+
+      res.status(201).json({ error: 'Password updated' })
+    } else {
+      res.status(500).json({ error: 'Password could not be updated' })
+    }
   } catch (error) {
     logger.error(error)
     res.status(500).json({ error: 'Password could not be updated' })
