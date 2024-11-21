@@ -22,7 +22,7 @@ model User {
   createdAt           DateTime       @default(now())
   updatedAt           DateTime       @updatedAt
   email               Email[]
-  movie               Movie[]
+  book                Book[]
   Comment             Comment[]
   notifications       Notification[] @relation("UserNotifications")
   personNotifications Notification[] @relation("PersonNotifications")
@@ -40,29 +40,29 @@ model Email {
   userId          Int
 }
 
-model Movie {
-  id          Int        @id @default(autoincrement())
+model Book {
+  id          Int       @id @default(autoincrement())
   name        Json
   director    Json
   description Json
   image       String
   date        String
   budget      String
-  user        User       @relation(fields: [userId], references: [id])
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   userId      Int
   quote       Quote[]
   tag         Tag[]
-  movieTag    MovieTag[]
+  bookTag     BookTag[]
 }
 
 model Quote {
   id           Int            @id @default(autoincrement())
   quote        Json
   image        String
-  movie        Movie          @relation(fields: [movieId], references: [id])
-  movieId      Int
+  book         Book           @relation(fields: [bookId], references: [id])
+  bookId       Int
   createdAt    DateTime       @default(now())
   updatedAt    DateTime       @updatedAt
   comment      Comment[]
@@ -82,21 +82,21 @@ model Comment {
 }
 
 model Tag {
-  id        Int        @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   tag       Json
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  movie     Movie[]
-  movieTag  MovieTag[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  book      Book[]
+  bookTag   BookTag[]
 }
 
-model MovieTag {
-  movie   Movie @relation(fields: [movieId], references: [id])
-  movieId Int
-  tag     Tag   @relation(fields: [tagId], references: [id])
-  tagId   Int
+model BookTag {
+  book   Book @relation(fields: [bookId], references: [id])
+  bookId Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  tagId  Int
 
-  @@id([movieId, tagId])
+  @@id([bookId, tagId])
 }
 
 model Notification {
