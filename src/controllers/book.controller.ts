@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
-import { Movie } from '../models/movie.model'
+import { Movie } from '../models/book.model'
 import { Tag } from '../models/tag.model'
-import { MovieTag } from '../models/movieTag.model'
+import { MovieTag } from '../models/bookTag.model'
 import logger from '../config/winston'
 
 export const getMovies = async (req: Request, res: Response) => {
