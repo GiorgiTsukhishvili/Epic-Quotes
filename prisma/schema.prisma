@@ -43,7 +43,7 @@ model Email {
 model Book {
   id          Int       @id @default(autoincrement())
   name        Json
-  director    Json
+  author      Json
   description Json
   image       String
   date        String
