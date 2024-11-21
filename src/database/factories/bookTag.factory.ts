@@ -1,4 +1,4 @@
 import { prisma } from '../../config/prisma'
 
-export const movieTagFactory = async (movieId: number, tagId: number) =>
-  await prisma.movieTag.create({ data: { movieId, tagId } })
+export const bookTagFactory = async (bookId: number, tagId: number) =>
+  await prisma.bookTag.create({ data: { bookId, tagId } })

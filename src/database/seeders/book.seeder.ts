@@ -1,11 +1,11 @@
 import logger from '../../config/winston'
-import { movieFactory } from '../factories/movie.factory'
+import { bookFactory } from '../factories/book.factory'
 
-export const movieSeeder = async () => {
+export const bookSeeder = async () => {
   try {
-    await movieFactory()
+    await bookFactory()
 
-    logger.info('Movie seed is complete')
+    logger.info('Book seed is complete')
   } catch (err) {
     logger.error(err)
   }

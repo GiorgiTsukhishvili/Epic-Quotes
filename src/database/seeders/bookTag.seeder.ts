@@ -1,18 +1,18 @@
 import { prisma } from '../../config/prisma'
 import logger from '../../config/winston'
-import { movieTagFactory } from '../factories/movieTag.factory'
+import { bookTagFactory } from '../factories/bookTag.factory'
 
-export const movieTagSeeder = async () => {
+export const bookTagSeeder = async () => {
   try {
-    const movie = await prisma.movie.findFirst()
+    const book = await prisma.book.findFirst()
 
     const tags = await prisma.tag.findMany()
 
     for (let tag of tags) {
-      await movieTagFactory(movie!.id, tag.id)
+      await bookTagFactory(book!.id, tag.id)
     }
 
-    logger.info('Movie tags  seed is complete')
+    logger.info('Book tags  seed is complete')
   } catch (err) {
     logger.error(err)
   }

@@ -3,7 +3,7 @@ import { prisma } from '../../config/prisma'
 import { Prisma } from '@prisma/client'
 
 export const quoteFactory = async () => {
-  const movie = await prisma.movie.findFirst()
+  const book = await prisma.book.findFirst()
 
   await prisma.quote.create({
     data: {
@@ -12,7 +12,7 @@ export const quoteFactory = async () => {
         ka: faker.book.title(),
       } as Prisma.JsonObject,
       image: `${process.env.APP_URL}/imgs/default.png`,
-      movieId: movie!.id,
+      bookId: book!.id,
     },
   })
 }

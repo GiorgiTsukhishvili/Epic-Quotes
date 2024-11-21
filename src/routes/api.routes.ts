@@ -54,7 +54,7 @@ import {
 import {
   movieStoreRequest,
   movieUpdateRequest,
-} from '../requests/movie.requests'
+} from '../requests/book.requests'
 import { notificationUpdateRequest } from '../requests/notification.requests'
 import { profileUpdateRequest } from '../requests/profile.requests'
 import {

@@ -2,10 +2,10 @@ import { faker } from '@faker-js/faker'
 import { prisma } from '../../config/prisma'
 import { Prisma } from '@prisma/client'
 
-export const movieFactory = async () => {
+export const bookFactory = async () => {
   const user = await prisma.user.findFirst()
 
-  await prisma.movie.create({
+  await prisma.book.create({
     data: {
       name: {
         en: faker.book.title(),
