@@ -136,8 +136,8 @@ export const verificationEmailTemplate = (
 
     <a href=${route} class="link">${routeText}</a>
 
-    <h1 class="bottom-text">${emailTranslations[lang]['any-problem']} <a href="moviequotes.ge"
-            class="website">support@moviequotes.ge</a></h1>
+    <h1 class="bottom-text">${emailTranslations[lang]['any-problem']} <a href="bookquotes.ge"
+            class="website">support@bookquotes.ge</a></h1>
 
     <h1>${emailTranslations[lang].crew}</h1>
 </body>

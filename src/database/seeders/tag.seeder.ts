@@ -1,7 +1,7 @@
 import logger from '../../config/winston'
 import { tagFactory } from '../factories/tag.factory'
 
-const movieTags = [
+const bookTags = [
   { en: 'Action', ka: 'ექშენი' },
   { en: 'Adventure', ka: 'სათავგადასავლო' },
   { en: 'Animation', ka: 'ანიმაცია' },
@@ -22,7 +22,7 @@ const movieTags = [
 
 export const tagSeeder = async () => {
   try {
-    for (let tag of movieTags) {
+    for (let tag of bookTags) {
       await tagFactory(tag)
     }
 
