@@ -40,8 +40,8 @@ export class Book {
     data: {
       nameEn: string
       nameKa: string
-      directorEn: string
-      directorKa: string
+      authorEn: string
+      authorKa: string
       descriptionEn: string
       descriptionKa: string
       date: string
@@ -56,9 +56,9 @@ export class Book {
           en: data.nameEn,
           ka: data.nameKa,
         },
-        director: {
-          en: data.directorEn,
-          ka: data.directorKa,
+        author: {
+          en: data.authorEn,
+          ka: data.authorKa,
         },
         description: {
           en: data.descriptionEn,
@@ -77,8 +77,8 @@ export class Book {
     data: {
       nameEn: string
       nameKa: string
-      directorEn: string
-      directorKa: string
+      authorEn: string
+      authorKa: string
       descriptionEn: string
       descriptionKa: string
       date: string
@@ -94,9 +94,9 @@ export class Book {
           en: data.nameEn,
           ka: data.nameKa,
         },
-        director: {
-          en: data.directorEn,
-          ka: data.directorKa,
+        author: {
+          en: data.authorEn,
+          ka: data.authorKa,
         },
         description: {
           en: data.descriptionEn,

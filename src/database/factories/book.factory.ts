@@ -15,7 +15,7 @@ export const bookFactory = async () => {
         en: faker.book.title(),
         ka: faker.book.title(),
       } as Prisma.JsonObject,
-      director: {
+      author: {
         en: faker.person.fullName(),
         ka: faker.person.fullName(),
       } as Prisma.JsonObject,
