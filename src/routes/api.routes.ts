@@ -2,14 +2,14 @@ import { Router } from 'express'
 import passport from 'passport'
 
 import {
-  createMovie,
-  deleteMovie,
+  createBook,
+  deleteBook,
   genres,
-  getMovie,
-  getMovies,
+  getBook,
+  getBooks,
   names,
-  updateMovie,
-} from '../controllers/movie.controller'
+  updateBook,
+} from '../controllers/book.controller'
 import {
   createQuote,
   deleteQuote,
@@ -51,10 +51,7 @@ import {
   additionalEmailVerifyRequest,
   emailVerificationRequest,
 } from '../requests/email.requests'
-import {
-  movieStoreRequest,
-  movieUpdateRequest,
-} from '../requests/book.requests'
+import { bookStoreRequest, bookUpdateRequest } from '../requests/book.requests'
 import { notificationUpdateRequest } from '../requests/notification.requests'
 import { profileUpdateRequest } from '../requests/profile.requests'
 import {
@@ -109,25 +106,25 @@ guestRouter.get(
 userRouter.post('/log-out', logoOut).get('/user-info', userInfo)
 
 userRouter
-  .get('/movies', getMovies)
-  .get('/movies/:id', getMovie)
-  .get('/movie-genres', genres)
-  .get('/movie-names', names)
+  .get('/books', getBooks)
+  .get('/books/:id', getBook)
+  .get('/book-genres', genres)
+  .get('/book-names', names)
   .post(
-    '/movies',
+    '/books',
     upload.single('image'),
-    movieStoreRequest,
+    bookStoreRequest,
     validateRequest,
-    createMovie
+    createBook
   )
   .put(
-    '/movies/:id',
+    '/books/:id',
     upload.single('image'),
-    movieUpdateRequest,
+    bookUpdateRequest,
     validateRequest,
-    updateMovie
+    updateBook
   )
-  .delete('/movies/:id', deleteMovie)
+  .delete('/books/:id', deleteBook)
 
 userRouter
   .get('/quotes', getQuotes)

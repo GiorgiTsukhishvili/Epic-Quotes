@@ -16,11 +16,11 @@ export const getBooks = async (req: Request, res: Response) => {
     res.status(200).json(books)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch movies')
+    res.status(500).send('Could not fetch books')
   }
 }
 
-export const getMovie = async (req: Request, res: Response) => {
+export const getBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
