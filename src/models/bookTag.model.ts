@@ -1,10 +1,10 @@
 import { prisma } from '../config/prisma'
 
-export class MovieTag {
-  static async create(movieId: number, tagId: number) {
-    await prisma.movieTag.create({
+export class BookTag {
+  static async create(bookId: number, tagId: number) {
+    await prisma.bookTag.create({
       data: {
-        movieId,
+        bookId,
         tagId,
       },
     })

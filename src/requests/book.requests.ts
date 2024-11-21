@@ -1,6 +1,6 @@
 import { body } from 'express-validator'
 
-export const movieStoreRequest = [
+export const bookStoreRequest = [
   body('nameKa').notEmpty().withMessage('Name (ka) is required'),
   body('nameEn').notEmpty().withMessage('Name (en) is required'),
   body('tags').notEmpty().withMessage('Tags are required'),
@@ -18,7 +18,7 @@ export const movieStoreRequest = [
   body('budget').notEmpty().withMessage('Budget is required'),
 ]
 
-export const movieUpdateRequest = [
+export const bookUpdateRequest = [
   body('image').custom((value, { req }) => {
     if (typeof value === 'string') {
       return true

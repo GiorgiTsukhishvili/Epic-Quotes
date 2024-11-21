@@ -1,8 +1,8 @@
 import { prisma } from '../config/prisma'
 
-export class Movie {
+export class Book {
   static async find(id: number) {
-    return await prisma.movie.findUnique({
+    return await prisma.book.findUnique({
       where: { id },
       include: {
         tag: { select: { id: true, tag: true } },
@@ -21,7 +21,7 @@ export class Movie {
   }
 
   static async findMany(userId: number, search: string | undefined) {
-    return await prisma.movie.findMany({
+    return await prisma.book.findMany({
       where: search
         ? {
             userId,
@@ -50,7 +50,7 @@ export class Movie {
     userId: number,
     image: string
   ) {
-    return await prisma.movie.create({
+    return await prisma.book.create({
       data: {
         name: {
           en: data.nameEn,
@@ -87,7 +87,7 @@ export class Movie {
     userId: number,
     image: string
   ) {
-    return await prisma.movie.update({
+    return await prisma.book.update({
       where: { id },
       data: {
         name: {
@@ -111,11 +111,11 @@ export class Movie {
   }
 
   static async delete(id: number) {
-    await prisma.movie.delete({ where: { id: +id } })
+    await prisma.book.delete({ where: { id: +id } })
   }
 
   static async names(userId: number) {
-    await prisma.movie.findMany({
+    await prisma.book.findMany({
       where: { userId },
       select: { name: true },
     })

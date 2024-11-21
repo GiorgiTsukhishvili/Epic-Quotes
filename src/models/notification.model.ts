@@ -25,7 +25,7 @@ export class Notification {
         quote: {
           select: {
             id: true,
-            movieId: true,
+            bookId: true,
           },
         },
       },

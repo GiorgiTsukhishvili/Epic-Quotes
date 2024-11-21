@@ -10,7 +10,7 @@ export class Quote {
       where: search
         ? search.startsWith('@')
           ? {
-              movie: {
+              book: {
                 OR: [
                   {
                     name: {
@@ -43,7 +43,7 @@ export class Quote {
             user: true,
           },
         },
-        movie: {
+        book: {
           select: {
             id: true,
             userId: true,
@@ -86,7 +86,7 @@ export class Quote {
   ) {
     return await prisma.quote.create({
       data: {
-        movieId: id,
+        bookId: id,
         quote: data,
         image,
       },
@@ -95,14 +95,14 @@ export class Quote {
 
   static async update(
     id: number,
-    movieId: number,
+    bookId: number,
     data: { en: string; ka: string },
     image: string
   ) {
     return await prisma.quote.update({
       where: { id },
       data: {
-        movieId,
+        bookId,
         quote: data,
         image,
       },
@@ -118,7 +118,7 @@ export class Quote {
       where: search
         ? search.startsWith('@')
           ? {
-              movie: {
+              book: {
                 OR: [
                   { name: { path: ['en'], string_contains: search.slice(1) } },
                   { name: { path: ['ka'], string_contains: search.slice(1) } },

@@ -1,19 +1,19 @@
 import { Request, Response } from 'express'
-import { Movie } from '../models/book.model'
+import { Book } from '../models/book.model'
 import { Tag } from '../models/tag.model'
-import { MovieTag } from '../models/bookTag.model'
+import { BookTag } from '../models/bookTag.model'
 import logger from '../config/winston'
 
-export const getMovies = async (req: Request, res: Response) => {
+export const getBooks = async (req: Request, res: Response) => {
   try {
     const { userId } = req.user as { userId: string }
 
-    const movies = await Movie.findMany(
+    const books = await Book.findMany(
       +userId,
       req.query.search as string | undefined
     )
 
-    res.status(200).json(movies)
+    res.status(200).json(books)
   } catch (err) {
     logger.error(err)
     res.status(500).send('Could not fetch movies')
@@ -24,16 +24,16 @@ export const getMovie = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    const movie = await Movie.find(+id)
+    const book = await Book.find(+id)
 
-    res.status(200).json(movie)
+    res.status(200).json(book)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch movie')
+    res.status(500).send('Could not fetch book')
   }
 }
 
-export const createMovie = async (req: Request, res: Response) => {
+export const createBook = async (req: Request, res: Response) => {
   try {
     const data = req.body
 
@@ -41,22 +41,22 @@ export const createMovie = async (req: Request, res: Response) => {
 
     const { userId } = req.user as { userId: string }
 
-    const movie = await Movie.create(data, +userId, imageUrl)
+    const book = await Book.create(data, +userId, imageUrl)
 
     const tags = JSON.parse(data.tags)
 
     for (const tagId of tags) {
-      await MovieTag.create(+movie.id, +tagId)
+      await BookTag.create(+book.id, +tagId)
     }
 
-    res.status(200).json({ message: 'Movie created successfully' })
+    res.status(200).json({ message: 'Book created successfully' })
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ message: 'Error creating movie' })
+    res.status(500).json({ message: 'Error creating book' })
   }
 }
 
-export const updateMovie = async (req: Request, res: Response) => {
+export const updateBook = async (req: Request, res: Response) => {
   try {
     const id = req.params.id
 
@@ -68,31 +68,31 @@ export const updateMovie = async (req: Request, res: Response) => {
 
     const { userId } = req.user as { userId: string }
 
-    const movie = await Movie.update(+id, data, +userId, data.image)
+    const book = await Book.update(+id, data, +userId, data.image)
 
     const tags = JSON.parse(data.tags)
 
     for (const tagId of tags) {
-      await MovieTag.create(+movie.id, +tagId)
+      await BookTag.create(+book.id, +tagId)
     }
 
-    res.status(200).json(movie)
+    res.status(200).json(book)
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ message: 'Error updating movie' })
+    res.status(500).json({ message: 'Error updating book' })
   }
 }
 
-export const deleteMovie = async (req: Request, res: Response) => {
+export const deleteBook = async (req: Request, res: Response) => {
   try {
     const { id } = req.params
 
-    await Movie.delete(+id)
+    await Book.delete(+id)
 
-    res.status(200).json({ message: 'Movie was deleted' })
+    res.status(200).json({ message: 'Book was deleted' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch movie')
+    res.status(500).send('Could not fetch book')
   }
 }
 
@@ -100,12 +100,12 @@ export const names = async (req: Request, res: Response) => {
   try {
     const { id } = req.user as { id: number }
 
-    const genres = await Movie.names(+id)
+    const genres = await Book.names(+id)
 
     res.status(200).json(genres)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch movie genres')
+    res.status(500).send('Could not fetch book genres')
   }
 }
 
@@ -116,6 +116,6 @@ export const genres = async (_: Request, res: Response) => {
     res.status(200).json(genres)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch movie genres')
+    res.status(500).send('Could not fetch book genres')
   }
 }
