@@ -145,12 +145,9 @@ userRouter
   )
   .delete('/quotes/:id', deleteQuote)
 
-userRouter.post(
-  '/comments',
-  commentStoreRequest,
-  validateRequest,
-  createComment
-)
+userRouter
+  .post('/comments', commentStoreRequest, validateRequest, createComment)
+  .delete('/comments')
 
 userRouter
   .get('/notifications', getNotifications)
