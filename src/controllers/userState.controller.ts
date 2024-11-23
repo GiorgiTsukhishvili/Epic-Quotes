@@ -5,6 +5,7 @@ import { PrismaClient } from '@prisma/client'
 import { generateJWTToken } from '../utils/jwt.util'
 import logger from '../config/winston'
 import { HttpRequests } from '../enums/httpRequests.enum'
+import { User } from '../models/user.model'
 
 const prisma = new PrismaClient()
 
@@ -90,4 +91,19 @@ export const refreshToken = (req: Request, res: Response) => {
   )
 }
 
-export const userInfo = (req: Request, res: Response) => {}
+export const userInfo = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as { userId: string }
+
+    const userInfo = await User.find(+user.userId)
+
+    res.status(HttpRequests.HTTP_OK).json({
+      user: userInfo,
+    })
+  } catch (error) {
+    logger.error(error)
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred while getting user information' })
+  }
+}

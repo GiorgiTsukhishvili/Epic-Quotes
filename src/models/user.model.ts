@@ -1,6 +1,13 @@
 import { prisma } from '../config/prisma'
 
 export class User {
+  static async find(id: number) {
+    return await prisma.user.findUnique({
+      where: { id },
+      include: { email: true },
+    })
+  }
+
   static async create(name: string, password: string, image: string) {
     return await prisma.user.create({
       data: {
