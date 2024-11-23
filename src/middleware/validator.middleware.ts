@@ -1,5 +1,6 @@
 import { validationResult } from 'express-validator'
 import { NextFunction, Request, Response } from 'express'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const validateRequest = (
   req: Request,
@@ -9,7 +10,9 @@ export const validateRequest = (
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
-    res.status(400).json({ errors: errors.array() })
+    res
+      .status(HttpRequests.HTTP_UNPROCESSABLE_ENTITY)
+      .json({ errors: errors.array() })
     return
   }
 

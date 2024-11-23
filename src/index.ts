@@ -10,7 +10,7 @@ import http from 'http'
 import { createWebSocketServer } from './routes/channel.routes'
 
 import './types/global'
-import './utils/passport'
+import './utils/passport.util'
 import logger from './config/winston'
 
 require('dotenv').config()

@@ -1,6 +1,7 @@
 import passport from 'passport'
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import { prisma } from '../config/prisma'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 passport.use(
   new GoogleStrategy(
@@ -21,7 +22,10 @@ passport.use(
         if (emailEntry) {
           // Check if the user has a password set
           if (emailEntry.user.password) {
-            return done(null, { error: 'User already exists', statusCode: 404 })
+            return done(null, {
+              error: 'User already exists',
+              statusCode: HttpRequests.HTTP_NOT_FOUND,
+            })
           }
           return done(null, emailEntry.user)
         }

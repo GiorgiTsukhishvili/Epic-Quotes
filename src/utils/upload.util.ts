@@ -14,7 +14,7 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '../../public/images')) // Set the upload directory
   },
   filename: (
-    req: Request,
+    _: Request,
     file: Express.Multer.File,
     cb: (error: Error | null, filename: string) => void
   ) => {
