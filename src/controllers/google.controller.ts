@@ -4,6 +4,7 @@ import { ExtendedAuthenticateOptionsGoogle } from '../types/global'
 import { generateJWTToken } from '../utils/jwt.util'
 import { Email } from '../models/email.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const googleCallback = async (req: Request, res: Response) => {
   try {
@@ -17,11 +18,13 @@ export const googleCallback = async (req: Request, res: Response) => {
     const email = await Email.findByEmail(googleUser.emails[0].value)
 
     if (email === undefined || email === null) {
-      res.status(500).json({ error: 'Email could not be found' })
+      res
+        .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+        .json({ error: 'Email could not be found' })
       return
     }
 
-    res.status(201).json({
+    res.status(HttpRequests.HTTP_CREATED).json({
       user: { name: email.user.name, email: email.email },
       tokens: generateJWTToken(
         {
@@ -34,7 +37,7 @@ export const googleCallback = async (req: Request, res: Response) => {
   } catch (error) {
     logger.error(error)
     res
-      .status(500)
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
       .json({ error: 'An error occurred while fetching google user' })
   }
 }

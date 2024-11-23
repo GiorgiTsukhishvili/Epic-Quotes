@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Notification } from '../models/notification.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const getNotifications = async (req: Request, res: Response) => {
   try {
@@ -8,10 +9,12 @@ export const getNotifications = async (req: Request, res: Response) => {
 
     const notifications = await Notification.findMany(+userId)
 
-    res.status(200).json(notifications)
+    res.status(HttpRequests.HTTP_OK).json(notifications)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch notifications')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch notifications')
   }
 }
 
@@ -23,9 +26,11 @@ export const updateNotification = async (req: Request, res: Response) => {
       await Notification.markRead(+id)
     }
 
-    res.status(200).json({ message: 'Notifications updated' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Notifications updated' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not update notifications')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not update notifications')
   }
 }

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Quote } from '../models/quote.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const getQuotes = async (req: Request, res: Response) => {
   try {
@@ -18,7 +19,7 @@ export const getQuotes = async (req: Request, res: Response) => {
 
     const totalPages = Math.ceil(totalCount / +pageSize)
 
-    res.status(200).json({
+    res.status(HttpRequests.HTTP_OK).json({
       data: quotes,
       pagination: {
         totalCount,
@@ -29,7 +30,9 @@ export const getQuotes = async (req: Request, res: Response) => {
     })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch quotes')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch quotes')
   }
 }
 
@@ -39,10 +42,12 @@ export const getQuote = async (req: Request, res: Response) => {
 
     const quote = await Quote.find(+id)
 
-    res.status(200).json(quote)
+    res.status(HttpRequests.HTTP_OK).json(quote)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch quote')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch quote')
   }
 }
 
@@ -61,10 +66,12 @@ export const createQuote = async (req: Request, res: Response) => {
       imageUrl
     )
 
-    res.status(200).json(quote)
+    res.status(HttpRequests.HTTP_CREATED).json(quote)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not create quote')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not create quote')
   }
 }
 
@@ -88,10 +95,12 @@ export const updateQuote = async (req: Request, res: Response) => {
       data.image
     )
 
-    res.status(200).json(quote)
+    res.status(HttpRequests.HTTP_OK).json(quote)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not update quote')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not update quote')
   }
 }
 
@@ -101,9 +110,11 @@ export const deleteQuote = async (req: Request, res: Response) => {
 
     await Quote.delete(+id)
 
-    res.status(200).json({ message: 'Quote was deleted' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Quote was deleted' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch quote')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch quote')
   }
 }

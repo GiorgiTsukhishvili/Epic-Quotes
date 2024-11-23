@@ -3,6 +3,7 @@ import { Book } from '../models/book.model'
 import { Tag } from '../models/tag.model'
 import { BookTag } from '../models/bookTag.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const getBooks = async (req: Request, res: Response) => {
   try {
@@ -13,10 +14,12 @@ export const getBooks = async (req: Request, res: Response) => {
       req.query.search as string | undefined
     )
 
-    res.status(200).json(books)
+    res.status(HttpRequests.HTTP_OK).json(books)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch books')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch books')
   }
 }
 
@@ -26,10 +29,12 @@ export const getBook = async (req: Request, res: Response) => {
 
     const book = await Book.find(+id)
 
-    res.status(200).json(book)
+    res.status(HttpRequests.HTTP_OK).json(book)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch book')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch book')
   }
 }
 
@@ -49,10 +54,14 @@ export const createBook = async (req: Request, res: Response) => {
       await BookTag.create(+book.id, +tagId)
     }
 
-    res.status(200).json({ message: 'Book created successfully' })
+    res
+      .status(HttpRequests.HTTP_CREATED)
+      .json({ message: 'Book created successfully' })
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ message: 'Error creating book' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ message: 'Error creating book' })
   }
 }
 
@@ -76,10 +85,12 @@ export const updateBook = async (req: Request, res: Response) => {
       await BookTag.create(+book.id, +tagId)
     }
 
-    res.status(200).json(book)
+    res.status(HttpRequests.HTTP_OK).json(book)
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ message: 'Error updating book' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ message: 'Error updating book' })
   }
 }
 
@@ -89,10 +100,12 @@ export const deleteBook = async (req: Request, res: Response) => {
 
     await Book.delete(+id)
 
-    res.status(200).json({ message: 'Book was deleted' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Book was deleted' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch book')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch book')
   }
 }
 
@@ -102,10 +115,12 @@ export const names = async (req: Request, res: Response) => {
 
     const genres = await Book.names(+id)
 
-    res.status(200).json(genres)
+    res.status(HttpRequests.HTTP_OK).json(genres)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch book genres')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch book genres')
   }
 }
 
@@ -113,9 +128,11 @@ export const genres = async (_: Request, res: Response) => {
   try {
     const genres = await Tag.findMany()
 
-    res.status(200).json(genres)
+    res.status(HttpRequests.HTTP_OK).json(genres)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch book genres')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not fetch book genres')
   }
 }

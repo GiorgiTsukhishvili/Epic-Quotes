@@ -3,6 +3,7 @@ import { Comment } from '../models/comment.model'
 import { Notification } from '../models/notification.model'
 import { broadcastMessageToUser } from '../routes/channel.routes'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const createComment = async (req: Request, res: Response) => {
   try {
@@ -27,10 +28,12 @@ export const createComment = async (req: Request, res: Response) => {
       broadcastMessageToUser(+userId, 'New comment')
     }
 
-    res.status(200).json(comment)
+    res.status(HttpRequests.HTTP_CREATED).json(comment)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Comment could not be created')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Comment could not be created')
   }
 }
 
@@ -40,9 +43,11 @@ export const deleteComment = async (req: Request, res: Response) => {
 
     await Comment.delete(+id)
 
-    res.status(200).json({ message: 'Comment was deleted' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Comment was deleted' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Comment could not be created')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Comment could not be created')
   }
 }

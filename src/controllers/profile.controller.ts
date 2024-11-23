@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { Profile } from '../models/profile.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const getProfile = async (req: Request, res: Response) => {
   try {
@@ -8,10 +9,12 @@ export const getProfile = async (req: Request, res: Response) => {
 
     const profile = await Profile.find(+userId)
 
-    res.status(204).send(profile)
+    res.status(HttpRequests.HTTP_OK).send(profile)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Profile could not be retrieved')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Profile could not be retrieved')
   }
 }
 
@@ -30,9 +33,11 @@ export const updateProfile = async (req: Request, res: Response) => {
       data as { image: string; name: string }
     )
 
-    res.status(200).send(profile)
+    res.status(HttpRequests.HTTP_OK).send(profile)
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Profile could not be updated')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Profile could not be updated')
   }
 }

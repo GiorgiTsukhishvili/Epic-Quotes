@@ -5,6 +5,7 @@ import { verificationEmailTemplate } from '../templates/verification-email.templ
 import { emailTranslations } from '../translations/email'
 import logger from '../config/winston'
 import redisClient from '../config/redis'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const addEmail = async (req: Request, res: Response) => {
   try {
@@ -43,10 +44,12 @@ export const addEmail = async (req: Request, res: Response) => {
       ),
     })
 
-    res.status(200).json({ message: 'Email was add successfully' })
+    res
+      .status(HttpRequests.HTTP_CREATED)
+      .json({ message: 'Email was add successfully' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not add email')
+    res.status(HttpRequests.HTTP_OK).send('Could not add email')
   }
 }
 
@@ -56,11 +59,11 @@ export const makeEmailPrimary = async (req: Request, res: Response) => {
 
     await Email.makePrimary(+id)
 
-    res.status(200).json({ message: 'Email was made primary' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Email was made primary' })
   } catch (err) {
     logger.error(err)
     res
-      .status(500)
+      .status(HttpRequests.HTTP_OK)
       .send(
         (err as { message: string }).message ?? 'Could not make email primary'
       )
@@ -73,9 +76,9 @@ export const deleteEmail = async (req: Request, res: Response) => {
 
     await Email.delete(+id)
 
-    res.status(200).json({ message: 'Email was deleted' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Email was deleted' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not fetch email')
+    res.status(HttpRequests.HTTP_OK).send('Could not fetch email')
   }
 }

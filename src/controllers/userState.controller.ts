@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
 import { generateJWTToken } from '../utils/jwt.util'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 const prisma = new PrismaClient()
 
@@ -35,7 +36,7 @@ export const login = async (req: Request, res: Response) => {
       return
     }
 
-    res.status(200).json({
+    res.status(HttpRequests.HTTP_OK).json({
       user: { name: selectedEmail.user.name, email: selectedEmail.email },
       tokens: generateJWTToken(
         {
@@ -48,19 +49,19 @@ export const login = async (req: Request, res: Response) => {
   } catch (error) {
     logger.error(error)
     res
-      .status(500)
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
       .json({ error: 'An error occurred while logging in the user' })
   }
 }
 
-export const logoOut = (req: Request, res: Response) => {
+export const logoOut = (_: Request, res: Response) => {
   res.clearCookie('refreshToken', {
     secure: true,
     sameSite: 'strict',
     httpOnly: true,
   })
 
-  res.status(200).json({ message: 'User logged out' })
+  res.status(HttpRequests.HTTP_OK).json({ message: 'User logged out' })
 }
 
 export const refreshToken = (req: Request, res: Response) => {
@@ -71,13 +72,15 @@ export const refreshToken = (req: Request, res: Response) => {
     process.env.REFRESH_TOKEN_SECRET!,
     (err: VerifyErrors | null, user: string | JwtPayload | undefined) => {
       if (err) {
-        res.status(401).json({ message: 'Refresh token invalid' })
+        res
+          .status(HttpRequests.HTTP_UNAUTHORIZED)
+          .json({ message: 'Refresh token invalid' })
         return
       }
 
       const { id, name } = user as { id: number; name: string }
 
-      res.status(201).json({
+      res.status(HttpRequests.HTTP_OK).json({
         tokens: generateJWTToken({
           userId: id,
           userName: name,

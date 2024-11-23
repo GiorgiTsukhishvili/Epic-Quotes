@@ -8,6 +8,7 @@ import { emailTranslations } from '../translations/email'
 import redisClient from '../config/redis'
 import { User } from '../models/user.model'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const register = async (req: Request, res: Response) => {
   try {
@@ -17,10 +18,12 @@ export const register = async (req: Request, res: Response) => {
 
     await Auth.register(name, email, password, lang)
 
-    res.status(201).json({ message: 'Email sent to user' })
+    res.status(HttpRequests.HTTP_OK).json({ message: 'Email sent to user' })
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ error: 'An error occurred while creating the user' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ error: 'An error occurred while creating the user' })
   }
 }
 
@@ -39,7 +42,9 @@ export const passwordReset = async (req: Request, res: Response) => {
     await redisClient.set(verificationToken, email, { EX: 1800, NX: true })
 
     if (!emailData?.emailVerifiedAt) {
-      res.status(422).send('Email is not verified')
+      res
+        .status(HttpRequests.HTTP_UNPROCESSABLE_ENTITY)
+        .send('Email is not verified')
     }
 
     // Generate a temporary signed URL for email verification (30 minutes expiration)
@@ -65,10 +70,14 @@ export const passwordReset = async (req: Request, res: Response) => {
       ),
     })
 
-    res.status(200).json({ message: 'Password reset email was sent' })
+    res
+      .status(HttpRequests.HTTP_OK)
+      .json({ message: 'Password reset email was sent' })
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Could not send password reset email')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Could not send password reset email')
   }
 }
 
@@ -87,13 +96,17 @@ export const passwordVerify = async (req: Request, res: Response) => {
 
       await redisClient.del(token)
 
-      res.status(201).json({ error: 'Password updated' })
+      res.status(HttpRequests.HTTP_OK).json({ error: 'Password updated' })
     } else {
-      res.status(500).json({ error: 'Password could not be updated' })
+      res
+        .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+        .json({ error: 'Password could not be updated' })
     }
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ error: 'Password could not be updated' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ error: 'Password could not be updated' })
   }
 }
 
@@ -122,10 +135,12 @@ export const emailVerify = async (req: Request, res: Response) => {
 
     await redisClient.del(token)
 
-    res.status(201).json({ error: 'Email verified' })
+    res.status(HttpRequests.HTTP_OK).json({ error: 'Email verified' })
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ error: 'Email could not be verified' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ error: 'Email could not be verified' })
   }
 }
 
@@ -140,12 +155,16 @@ export const additionalEmailVerify = async (req: Request, res: Response) => {
 
       await redisClient.del(token)
 
-      res.status(201).json({ error: 'Email verified' })
+      res.status(HttpRequests.HTTP_OK).json({ error: 'Email verified' })
     } else {
-      res.status(500).json({ error: 'Email could not be verified' })
+      res
+        .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+        .json({ error: 'Email could not be verified' })
     }
   } catch (error) {
     logger.error(error)
-    res.status(500).json({ error: 'Email could not be verified' })
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .json({ error: 'Email could not be verified' })
   }
 }

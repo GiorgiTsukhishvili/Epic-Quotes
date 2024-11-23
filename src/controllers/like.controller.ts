@@ -3,6 +3,7 @@ import { Like } from '../models/like.model'
 import { Notification } from '../models/notification.model'
 import { broadcastMessageToUser } from '../routes/channel.routes'
 import logger from '../config/winston'
+import { HttpRequests } from '../enums/httpRequests.enum'
 
 export const storeOrDestroyLike = async (req: Request, res: Response) => {
   try {
@@ -26,14 +27,16 @@ export const storeOrDestroyLike = async (req: Request, res: Response) => {
     if (like) {
       await Like.destroy(like.id)
 
-      res.status(200).json({ message: 'Like removed' })
+      res.status(HttpRequests.HTTP_OK).json({ message: 'Like removed' })
     } else {
       const newLike = await Like.create(+data.quoteId, +userId)
 
-      res.status(200).json(newLike)
+      res.status(HttpRequests.HTTP_CREATED).json(newLike)
     }
   } catch (err) {
     logger.error(err)
-    res.status(500).send('Like could not be created or destroyed')
+    res
+      .status(HttpRequests.HTTP_INTERNAL_SERVER_ERROR)
+      .send('Like could not be created or destroyed')
   }
 }
