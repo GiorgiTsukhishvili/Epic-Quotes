@@ -2,7 +2,7 @@ import jwt, { JwtPayload, VerifyErrors } from 'jsonwebtoken'
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { PrismaClient } from '@prisma/client'
-import { generateJWTToken } from '../utils/jwt'
+import { generateJWTToken } from '../utils/jwt.util'
 import logger from '../config/winston'
 
 const prisma = new PrismaClient()

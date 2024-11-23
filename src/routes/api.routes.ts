@@ -65,7 +65,7 @@ import {
   refreshToken,
   userInfo,
 } from '../controllers/userState.controller'
-import upload from '../utils/upload'
+import upload from '../utils/upload.util'
 
 import {
   googleCallback,

@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import passport from 'passport'
 import { ExtendedAuthenticateOptionsGoogle } from '../types/global'
-import { generateJWTToken } from '../utils/jwt'
+import { generateJWTToken } from '../utils/jwt.util'
 import { Email } from '../models/email.model'
 import logger from '../config/winston'
 

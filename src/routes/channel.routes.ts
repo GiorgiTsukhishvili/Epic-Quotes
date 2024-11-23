@@ -1,6 +1,6 @@
 import { Request } from 'express'
 import WebSocket, { WebSocketServer } from 'ws'
-import { verifyToken } from '../utils/jwt'
+import { verifyToken } from '../utils/jwt.util'
 import logger from '../config/winston'
 let connections: { ws: WebSocket; userId: number }[] = []
 
