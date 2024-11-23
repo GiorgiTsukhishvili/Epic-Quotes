@@ -30,7 +30,7 @@ import {
   deleteEmail,
   makeEmailPrimary,
 } from '../controllers/email.controller'
-import { createComment } from '../controllers/comment.controller'
+import { createComment, deleteComment } from '../controllers/comment.controller'
 import {
   getNotifications,
   updateNotification,
@@ -147,7 +147,7 @@ userRouter
 
 userRouter
   .post('/comments', commentStoreRequest, validateRequest, createComment)
-  .delete('/comments')
+  .delete('/comments/:id', deleteComment)
 
 userRouter
   .get('/notifications', getNotifications)

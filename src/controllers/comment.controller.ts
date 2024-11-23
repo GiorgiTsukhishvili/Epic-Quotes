@@ -33,3 +33,16 @@ export const createComment = async (req: Request, res: Response) => {
     res.status(500).send('Comment could not be created')
   }
 }
+
+export const deleteComment = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params
+
+    await Comment.delete(+id)
+
+    res.status(200).json({ message: 'Comment was deleted' })
+  } catch (err) {
+    logger.error(err)
+    res.status(500).send('Comment could not be created')
+  }
+}

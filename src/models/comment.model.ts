@@ -9,4 +9,8 @@ export class Comment {
       data: { quoteId: +data.quoteId, userId, comment: data.comment },
     })
   }
+
+  static async delete(id: number) {
+    await prisma.comment.delete({ where: { id } })
+  }
 }
