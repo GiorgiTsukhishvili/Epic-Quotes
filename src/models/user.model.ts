@@ -4,7 +4,7 @@ export class User {
   static async find(id: number) {
     return await prisma.user.findUnique({
       where: { id },
-      include: { email: true },
+      select: { email: true, name: true, image: true, googleId: true },
     })
   }
 
