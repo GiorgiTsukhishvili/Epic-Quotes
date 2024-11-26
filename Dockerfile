@@ -28,6 +28,9 @@ FROM node:18-alpine AS runtime
 # Set working directory
 WORKDIR /app
 
+# Install pnpm
+RUN npm install -g pnpm
+
 # Copy dependencies from the build stage
 COPY --from=build /app/node_modules ./node_modules
 
