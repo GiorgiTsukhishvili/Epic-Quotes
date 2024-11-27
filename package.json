@@ -1,5 +1,5 @@
 {
-  "name": "deno",
+  "name": "epic-quotes",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,7 @@
     "build": "babel src --extensions \".ts,.js\" --out-dir build",
     "start": "node build/index.js",
     "dev": "nodemon src/index.ts",
-    "db:migrate-dev": "prisma migrate dev",
+    "db:migrate": "prisma migrate dev",
     "db:seed": "babel-node src/database/seeders/seeder.ts"
   },
   "keywords": [],

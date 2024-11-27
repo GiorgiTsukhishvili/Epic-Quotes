@@ -34,7 +34,7 @@ A RESTful API for managing movie quotes. This application allows users to add, u
    ```bash
    pnpm install && \
    cp .env && \
-   pnpm run db:migrate-dev
+   pnpm run db:migrate
    ```
 
 3. Seed the database (optional, for initial data):
