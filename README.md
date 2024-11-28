@@ -25,8 +25,8 @@ A RESTful API for managing movie quotes. This application allows users to add, u
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/GiorgiTsukhishvili/Epic-Quotes.git
-   cd epic-quotes
+   git clone https://github.com/GiorgiTsukhishvili/epic-quotes-api.git
+   cd epic-quotes-api
    ```
 
 2. Install dependencies, set up environment variables, and run Prisma migrations:
